@@ -189,7 +189,7 @@ QPushButton:pressed {
      <string>[ ]</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnForward">
+   <widget class="QPushButton" name="btnNext">
     <property name="geometry">
      <rect>
       <x>700</x>
@@ -221,7 +221,7 @@ QPushButton:pressed {
      <string>&gt;&gt;</string>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider">
+   <widget class="QSlider" name="sldrSeek">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -270,7 +270,7 @@ QSlider::handle:horizontal:pressed {
      <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider_2">
+   <widget class="QSlider" name="sldrVolume">
     <property name="geometry">
      <rect>
       <x>920</x>
@@ -319,7 +319,7 @@ QSlider::handle:horizontal:pressed {
      <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnRewind">
+   <widget class="QPushButton" name="btnPrev">
     <property name="geometry">
      <rect>
       <x>500</x>
@@ -351,7 +351,7 @@ QPushButton:pressed {
      <string>&lt;&lt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="fileName">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -388,6 +388,38 @@ QPushButton:pressed {
     </property>
     <property name="text">
      <string>##:##</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnMute">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>430</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #D3D3D3; /* Color de fondo gris claro */
+    color: black; /* Color del texto */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+QPushButton:hover {
+    background-color: #C0C0C0; /* Color cuando se pasa el mouse */
+}
+
+QPushButton:pressed {
+    background-color: #A9A9A9; /* Color cuando se hace clic */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>X</string>
     </property>
    </widget>
   </widget>
