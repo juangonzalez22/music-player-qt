@@ -25,8 +25,19 @@
     <height>576</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>15</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+    background-color: #2C2C2C; /* Color de fondo oscuro */
+}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="frame">
@@ -37,6 +48,14 @@
       <width>261</width>
       <height>491</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame {
+    background-color: #212121; /* Color de fondo gris oscuro */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 10px; /* Bordes redondeados */
+}
+</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Shape::StyledPanel</enum>
@@ -54,6 +73,14 @@
       <height>405</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame {
+    background-color: #212121; /* Color de fondo gris oscuro */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 10px; /* Bordes redondeados */
+}
+</string>
+    </property>
     <property name="frameShape">
      <enum>QFrame::Shape::StyledPanel</enum>
     </property>
@@ -61,56 +88,137 @@
      <enum>QFrame::Shadow::Raised</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btnPlay">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>450</y>
-      <width>50</width>
-      <height>31</height>
+      <x>520</x>
+      <y>430</y>
+      <width>71</width>
+      <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>-1</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #D3D3D3; /* Color de fondo gris claro */
+    color: black; /* Color del texto */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+QPushButton:hover {
+    background-color: #C0C0C0; /* Color cuando se pasa el mouse */
+}
+
+QPushButton:pressed {
+    background-color: #A9A9A9; /* Color cuando se hace clic */
+}
+</string>
+    </property>
     <property name="text">
-     <string/>
+     <string>Play</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="btnPause">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>450</y>
-      <width>50</width>
-      <height>31</height>
+      <x>600</x>
+      <y>430</y>
+      <width>71</width>
+      <height>51</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #D3D3D3; /* Color de fondo gris claro */
+    color: black; /* Color del texto */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+QPushButton:hover {
+    background-color: #C0C0C0; /* Color cuando se pasa el mouse */
+}
+
+QPushButton:pressed {
+    background-color: #A9A9A9; /* Color cuando se hace clic */
+}
+</string>
+    </property>
     <property name="text">
-     <string/>
+     <string>Pause</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="btnStop">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>450</y>
-      <width>50</width>
-      <height>31</height>
+      <x>680</x>
+      <y>430</y>
+      <width>71</width>
+      <height>51</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #D3D3D3; /* Color de fondo gris claro */
+    color: black; /* Color del texto */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+QPushButton:hover {
+    background-color: #C0C0C0; /* Color cuando se pasa el mouse */
+}
+
+QPushButton:pressed {
+    background-color: #A9A9A9; /* Color cuando se hace clic */
+}
+</string>
+    </property>
     <property name="text">
-     <string/>
+     <string>Stop</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="btnForward">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>450</y>
-      <width>50</width>
-      <height>31</height>
+      <x>760</x>
+      <y>430</y>
+      <width>71</width>
+      <height>51</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #D3D3D3; /* Color de fondo gris claro */
+    color: black; /* Color del texto */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+QPushButton:hover {
+    background-color: #C0C0C0; /* Color cuando se pasa el mouse */
+}
+
+QPushButton:pressed {
+    background-color: #A9A9A9; /* Color cuando se hace clic */
+}
+</string>
+    </property>
     <property name="text">
-     <string/>
+     <string>Next</string>
     </property>
    </widget>
    <widget class="QSlider" name="horizontalSlider">
@@ -121,6 +229,42 @@
       <width>721</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QSlider {
+    background: #2C2C2C; /* Color de fondo del slider */
+}
+
+QSlider::groove:horizontal {
+    background: #4A4A4A; /* Color de la pista del slider */
+    height: 8px; /* Altura de la pista */
+    border-radius: 4px; /* Bordes redondeados de la pista */
+}
+
+QSlider::sub-page:horizontal {
+    background: #121212; /* Color más oscuro cuando se llena el slider */
+	border: 2px solid #000000; /* Borde negro alrededor*/
+    border-radius: 4px; /* Bordes redondeados de la pista de llenado */
+}
+
+QSlider::handle:horizontal {
+    background: #6A6A6A; /* Color del control deslizante */
+    border: 2px solid #000000; /* Borde negro alrededor del control deslizante */
+    width: 16px; /* Ancho del control deslizante */
+    margin: -4px 0; /* Margen superior e inferior */
+    border-radius: 8px; /* Bordes redondeados del control deslizante */
+}
+
+QSlider::handle:horizontal:hover {
+    background: #8A8A8A; /* Color del control deslizante al pasar el mouse */
+}
+
+QSlider::handle:horizontal:pressed {
+    background: #A0A0A0; /* Color del control deslizante cuando se presiona */
+}
+
+
+</string>
     </property>
     <property name="orientation">
      <enum>Qt::Orientation::Horizontal</enum>
@@ -135,17 +279,85 @@
       <height>51</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QSlider {
+    background: #2C2C2C; /* Color de fondo del slider */
+}
+
+QSlider::groove:horizontal {
+    background: #4A4A4A; /* Color de la pista del slider */
+    height: 8px; /* Altura de la pista */
+    border-radius: 4px; /* Bordes redondeados de la pista */
+}
+
+QSlider::sub-page:horizontal {
+    background: #121212; /* Color más oscuro cuando se llena el slider */
+	border: 2px solid #000000; /* Borde negro alrededor*/
+    border-radius: 4px; /* Bordes redondeados de la pista de llenado */
+}
+
+QSlider::handle:horizontal {
+    background: #6A6A6A; /* Color del control deslizante */
+    border: 2px solid #000000; /* Borde negro alrededor del control deslizante */
+    width: 16px; /* Ancho del control deslizante */
+    margin: -4px 0; /* Margen superior e inferior */
+    border-radius: 8px; /* Bordes redondeados del control deslizante */
+}
+
+QSlider::handle:horizontal:hover {
+    background: #8A8A8A; /* Color del control deslizante al pasar el mouse */
+}
+
+QSlider::handle:horizontal:pressed {
+    background: #A0A0A0; /* Color del control deslizante cuando se presiona */
+}
+
+
+</string>
+    </property>
     <property name="orientation">
      <enum>Qt::Orientation::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnRewind">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>430</y>
+      <width>71</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #D3D3D3; /* Color de fondo gris claro */
+    color: black; /* Color del texto */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+QPushButton:hover {
+    background-color: #C0C0C0; /* Color cuando se pasa el mouse */
+}
+
+QPushButton:pressed {
+    background-color: #A9A9A9; /* Color cuando se hace clic */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Prev</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>420</y>
-      <width>271</width>
-      <height>24</height>
+      <y>430</y>
+      <width>201</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
