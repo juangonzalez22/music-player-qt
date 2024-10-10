@@ -364,7 +364,7 @@ QPushButton:pressed {
      <string>FILE_NAME</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="currentTime">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -377,7 +377,7 @@ QPushButton:pressed {
      <string>##:##</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="totalTime">
     <property name="geometry">
      <rect>
       <x>380</x>
