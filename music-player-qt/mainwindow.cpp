@@ -69,7 +69,6 @@ void MainWindow::positionChanged(quint64 progress)
 {
     if (!ui->sldrSeek->isSliderDown())  // Solo actualizar si el slider no está siendo movido
     {
-        ui->sldrSeek->setValue(progress / 1000);
         updateduration(progress / 1000); // Llama a la función updateduration para actualizar la interfaz
     }
 }
