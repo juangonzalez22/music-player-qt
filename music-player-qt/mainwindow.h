@@ -30,10 +30,6 @@ private slots:
 
     void on_actionOpen_File_triggered();
 
-    void on_btnPlay_clicked();
-
-    void on_btnPause_clicked();
-
     void on_btnPrev_clicked();
 
     void on_btnNext_clicked();
@@ -44,10 +40,13 @@ private slots:
 
     void on_sldrVolume_valueChanged(int value);
 
+    void on_btnPlayPause_clicked();
+
 private:
     void updateduration(qint64 duration);
     Ui::MainWindow *ui;
     bool IS_Muted = false;
+    bool IS_Paused = true;
     QMediaPlayer *MPlayer;
     QAudioOutput *audioOutput;
     qint64 Mduration;

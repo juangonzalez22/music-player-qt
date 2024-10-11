@@ -88,75 +88,6 @@
      <enum>QFrame::Shadow::Raised</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnPlay">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>430</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>-1</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: #D3D3D3; /* Color de fondo gris claro */
-    color: black; /* Color del texto */
-    border: 2px solid black; /* Borde negro */
-    border-radius: 10px; /* Bordes redondeados */
-    padding: 10px; /* Espaciado interno */
-    font-size: 16px; /* Tamaño de fuente */
-}
-
-QPushButton:hover {
-    background-color: #C0C0C0; /* Color cuando se pasa el mouse */
-}
-
-QPushButton:pressed {
-    background-color: #A9A9A9; /* Color cuando se hace clic */
-}
-</string>
-    </property>
-    <property name="text">
-     <string>&gt;</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnPause">
-    <property name="geometry">
-     <rect>
-      <x>600</x>
-      <y>430</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: #D3D3D3; /* Color de fondo gris claro */
-    color: black; /* Color del texto */
-    border: 2px solid black; /* Borde negro */
-    border-radius: 10px; /* Bordes redondeados */
-    padding: 10px; /* Espaciado interno */
-    font-size: 16px; /* Tamaño de fuente */
-}
-
-QPushButton:hover {
-    background-color: #C0C0C0; /* Color cuando se pasa el mouse */
-}
-
-QPushButton:pressed {
-    background-color: #A9A9A9; /* Color cuando se hace clic */
-}
-</string>
-    </property>
-    <property name="text">
-     <string>||</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnStop">
     <property name="geometry">
      <rect>
@@ -420,6 +351,37 @@ QPushButton:pressed {
     </property>
     <property name="text">
      <string>X</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnPlayPause">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>430</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #D3D3D3; /* Color de fondo gris claro */
+    color: black; /* Color del texto */
+    border: 2px solid black; /* Borde negro */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+QPushButton:hover {
+    background-color: #C0C0C0; /* Color cuando se pasa el mouse */
+}
+
+QPushButton:pressed {
+    background-color: #A9A9A9; /* Color cuando se hace clic */
+}</string>
+    </property>
+    <property name="text">
+     <string>&gt; / ||</string>
     </property>
    </widget>
   </widget>

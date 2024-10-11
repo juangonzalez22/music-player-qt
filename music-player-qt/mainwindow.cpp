@@ -101,16 +101,6 @@ void MainWindow::on_actionOpen_File_triggered()
     ui->fileName->setText(fileInfo.fileName());
 }
 
-void MainWindow::on_btnPlay_clicked()
-{
-    MPlayer->play();
-}
-
-void MainWindow::on_btnPause_clicked()
-{
-    MPlayer->pause();
-}
-
 void MainWindow::on_btnStop_clicked()
 {
     MPlayer->stop();
@@ -138,3 +128,15 @@ void MainWindow::on_sldrVolume_valueChanged(int value)
 {
     audioOutput->setVolume(value / 100.0);  // Convierte el valor de 0-100 a 0.0-1.0
 }
+
+void MainWindow::on_btnPlayPause_clicked()
+{
+    if (!IS_Paused) {
+        MPlayer->pause();
+        IS_Paused = true;
+    } else {
+        MPlayer->play();
+        IS_Paused = false;
+    }
+}
+
