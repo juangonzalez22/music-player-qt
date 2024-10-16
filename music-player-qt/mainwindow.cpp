@@ -1,9 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QPixmap>
 #include <QFileDialog>
-#include <QMediaPlayer>
-#include <QAudioOutput>
 #include <QTime>
 #include <QFileInfo>
 #include <QDebug>
@@ -21,22 +18,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->sldrVolume->setMaximum(100);
     ui->sldrVolume->setValue(30);
 
-    audioOutput->setVolume(ui->sldrVolume->value() / 100.0); // Set volume from slider value
+    audioOutput->setVolume(ui->sldrVolume->value() / 100.0);
 
     connect(MPlayer, &QMediaPlayer::durationChanged, this, &MainWindow::durationChanged);
     connect(MPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::positionChanged);
 
-    ui->sldrSeek->setRange(0, 0); // Initial range
-
-    // Desconectar el slider de la función para poder manejarlo manualmente
-    connect(ui->sldrSeek, &QSlider::sliderPressed, this, [=](){
-        ui->sldrSeek->setEnabled(false); // Desactivar el slider
-    });
-
-    connect(ui->sldrSeek, &QSlider::sliderReleased, this, [=](){
-        ui->sldrSeek->setEnabled(true); // Reactivar el slider
-        MPlayer->setPosition(ui->sldrSeek->value() * 1000); // Cambiar la posición solo cuando se suelta el slider
-    });
+    ui->sldrSeek->setRange(0, 0);
 }
 
 MainWindow::~MainWindow()
@@ -44,14 +31,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::updateduration(qint64 duration)
+void MainWindow::updateDuration(qint64 duration)
 {
-    QString timestr;
     if(duration && Mduration){
         QTime CurrentTime((duration / 3600) % 60, (duration / 60) % 60, duration % 60, (duration*1000)%1000);
         QTime TotalTime ((Mduration / 3600) % 60, (Mduration / 60) % 60, Mduration % 60, (Mduration * 1000) % 1000);
         QString format = "mm:ss";
-        if(Mduration > 3600){
+        if(Mduration > 3600) {
             format = "hh:mm:ss";
         }
         ui->currentTime->setText(CurrentTime.toString(format));
@@ -61,42 +47,42 @@ void MainWindow::updateduration(qint64 duration)
 
 void MainWindow::durationChanged(qint64 duration)
 {
-    Mduration = duration / 1000; // Convertimos de milisegundos a segundos
+    Mduration = duration / 1000;
     ui->sldrSeek->setMaximum(Mduration);
 }
 
-void MainWindow::positionChanged(quint64 progress)
+void MainWindow::positionChanged(qint64 position)
 {
-    if (!ui->sldrSeek->isSliderDown())  // Solo actualizar si el slider no está siendo movido
-    {
-        updateduration(progress / 1000); // Llama a la función updateduration para actualizar la interfaz
+    if (!ui->sldrSeek->isSliderDown()) {
+        updateDuration(position / 1000);
+        ui->sldrSeek->setValue(position / 1000);
     }
 }
 
-
-void MainWindow::on_btnMute_clicked() {
+void MainWindow::on_btnMute_clicked()
+{
     if (!IS_Muted) {
-        audioOutput->setVolume(0);  // Silenciar
+        audioOutput->setVolume(0);
         IS_Muted = true;
     } else {
-        audioOutput->setVolume(ui->sldrVolume->value() / 100.0);  // Restaurar volumen
+        audioOutput->setVolume(ui->sldrVolume->value() / 100.0);
         IS_Muted = false;
     }
 }
 
 void MainWindow::on_actionOpen_File_triggered()
 {
-    QString FileName = QFileDialog::getOpenFileName(this, tr("Select Audio File"), "", tr("MP3 Files (*.mp3)"));
-    if (FileName.isEmpty()) return;  // Verifica que se haya seleccionado un archivo
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Select Audio File"), "", tr("MP3 Files (*.mp3)"));
+    if (fileName.isEmpty()) return;
 
-    MPlayer->setSource(QUrl::fromLocalFile(FileName));
+    MPlayer->setSource(QUrl::fromLocalFile(fileName));
 
     if (MPlayer->error() != QMediaPlayer::NoError) {
         qDebug() << "Error al cargar el archivo:" << MPlayer->errorString();
         return;
     }
 
-    QFileInfo fileInfo(FileName);
+    QFileInfo fileInfo(fileName);
     ui->fileName->setText(fileInfo.fileName());
 }
 
@@ -107,27 +93,18 @@ void MainWindow::on_btnStop_clicked()
 
 void MainWindow::on_btnPrev_clicked()
 {
-
+    // Implementar la funcionalidad para la pista anterior
 }
 
 void MainWindow::on_btnNext_clicked()
 {
-
-}
-
-void MainWindow::on_sldrSeek_valueChanged(int value)
-{
-    // Solo se cambia la posición si el slider está habilitado
-    if (ui->sldrSeek->isEnabled()) {
-        MPlayer->setPosition(value * 1000);
-    }
+    // Implementar la funcionalidad para la siguiente pista
 }
 
 void MainWindow::on_sldrVolume_valueChanged(int value)
 {
-    audioOutput->setVolume(value / 100.0);  // Convierte el valor de 0-100 a 0.0-1.0
+    audioOutput->setVolume(value / 100.0);
 }
-
 void MainWindow::on_btnPlayPause_clicked()
 {
     if (!IS_Paused) {
@@ -139,3 +116,12 @@ void MainWindow::on_btnPlayPause_clicked()
     }
 }
 
+void MainWindow::on_sldrSeek_sliderMoved(int position)
+{
+    MPlayer->setPosition(position * 1000);
+}
+
+void MainWindow::on_sldrSeek_sliderReleased()
+{
+    MPlayer->setPosition(ui->sldrSeek->value() * 1000);
+}
