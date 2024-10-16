@@ -11,6 +11,8 @@
 // QtWidgets contiene todas las clases relacionadas con los widgets de la interfaz gráfica de usuario (botones, sliders, etiquetas, etc.).
 #include <QtWidgets>
 
+#include <QFileSystemModel> // Asegúrate de incluir QFileSystemModel
+
 // Estas macros delimitan un espacio de nombres específico de Qt.
 // QT_BEGIN_NAMESPACE y QT_END_NAMESPACE son útiles para evitar colisiones de nombres en grandes proyectos o bibliotecas.
 QT_BEGIN_NAMESPACE
@@ -76,6 +78,9 @@ private slots:
     // Este slot es activado cuando el slider de búsqueda es liberado después de haber sido arrastrado.
     void on_sldrSeek_sliderReleased();
 
+    void on_treeView_doubleClicked(const QModelIndex &index); // Añade este slot
+
+
 private:
     // Esta función privada se utiliza para actualizar la duración del archivo multimedia.
     // Se encarga de manejar y actualizar cualquier lógica relacionada con la duración del contenido que se está reproduciendo.
@@ -102,6 +107,9 @@ private:
 
     // Variable de tipo qint64 que guarda la duración actual del archivo multimedia (en milisegundos).
     qint64 Mduration;
+
+    QFileSystemModel *dirmodel; // Modelo para mostrar el sistema de archivos (directorios)
+    QString sPath; // Ruta del directorio seleccionado
 };
 
 #endif // MAINWINDOW_H  // Esta línea final cierra la verificación de preprocesador para evitar múltiples inclusiones del archivo.
