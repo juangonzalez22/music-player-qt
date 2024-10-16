@@ -11,12 +11,13 @@
 // QtWidgets contiene todas las clases relacionadas con los widgets de la interfaz gráfica de usuario (botones, sliders, etiquetas, etc.).
 #include <QtWidgets>
 
-#include <QFileSystemModel> // Asegúrate de incluir QFileSystemModel
+#include <QFileSystemModel> // Asegúrate de incluir QFileSystemModel, que es útil para manejar el sistema de archivos y mostrar directorios.
+
 
 // Estas macros delimitan un espacio de nombres específico de Qt.
 // QT_BEGIN_NAMESPACE y QT_END_NAMESPACE son útiles para evitar colisiones de nombres en grandes proyectos o bibliotecas.
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }  // Declaración adelantada de la clase Ui::MainWindow que será usada en el archivo cpp.
+namespace Ui { class MainWindow; }  // Declaración adelantada de la clase Ui::MainWindow que será usada en el archivo cpp, necesaria para la interfaz de usuario.
 QT_END_NAMESPACE
 
 // Definición de la clase MainWindow que hereda de QMainWindow.
@@ -78,8 +79,7 @@ private slots:
     // Este slot es activado cuando el slider de búsqueda es liberado después de haber sido arrastrado.
     void on_sldrSeek_sliderReleased();
 
-    void on_treeView_doubleClicked(const QModelIndex &index); // Añade este slot
-
+    void on_treeView_doubleClicked(const QModelIndex &index); // Añade este slot para manejar la acción de doble clic en el treeView.
 
 private:
     // Esta función privada se utiliza para actualizar la duración del archivo multimedia.
@@ -108,9 +108,11 @@ private:
     // Variable de tipo qint64 que guarda la duración actual del archivo multimedia (en milisegundos).
     qint64 Mduration;
 
-    QFileSystemModel *dirmodel; // Modelo para mostrar el sistema de archivos (directorios)
-    QString sPath; // Ruta del directorio seleccionado
+    // Puntero a QFileSystemModel, que es útil para mostrar el sistema de archivos (directorios y archivos) en el treeView.
+    QFileSystemModel *dirmodel; // Modelo para mostrar el sistema de archivos (directorios).
+
+    // Variable que almacena la ruta del directorio seleccionado para la exploración de archivos.
+    QString sPath; // Ruta del directorio seleccionado.
 };
 
 #endif // MAINWINDOW_H  // Esta línea final cierra la verificación de preprocesador para evitar múltiples inclusiones del archivo.
-

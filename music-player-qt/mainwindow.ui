@@ -414,7 +414,7 @@ QTreeView::branch {
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen_File">
    <property name="text">
-    <string>Open File</string>
+    <string>Open Folder</string>
    </property>
   </action>
  </widget>
