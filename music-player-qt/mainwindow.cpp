@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->sldrVolume->setMaximum(100);
     ui->sldrVolume->setValue(30);
 
-    audioOutput->setVolume(ui->sldrVolume->value() / 100.0);
+    audioOutput->setVolume(ui->sldrVolume->value() / 100.0); // Set volume from slider value
 
     connect(MPlayer, &QMediaPlayer::durationChanged, this, &MainWindow::durationChanged);
     connect(MPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::positionChanged);
