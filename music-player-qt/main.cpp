@@ -33,3 +33,4 @@ int main(int argc, char *argv[])
     // Cuando el ciclo de eventos finaliza (por ejemplo, cuando el usuario cierra la aplicación), exec() devuelve un valor que luego es devuelto por la función main.
     return a.exec();
 }
+//Hola mundo!
