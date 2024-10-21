@@ -376,6 +376,9 @@ QPushButton:pressed {
       <height>405</height>
      </rect>
     </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
+    </property>
     <property name="styleSheet">
      <string notr="true">QTreeView {
     background-color: #212121; /* Color de fondo gris oscuro */
@@ -391,6 +394,12 @@ QTreeView::branch {
     background-color: #212121; /* Color de fondo de las ramas */
 }
 </string>
+    </property>
+    <property name="animated">
+     <bool>true</bool>
+    </property>
+    <property name="headerHidden">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>
