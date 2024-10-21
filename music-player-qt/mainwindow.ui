@@ -373,7 +373,7 @@ QPushButton:pressed {
       <x>10</x>
       <y>10</y>
       <width>271</width>
-      <height>405</height>
+      <height>201</height>
      </rect>
     </property>
     <property name="contextMenuPolicy">
@@ -400,6 +400,16 @@ QTreeView::branch {
     </property>
     <property name="headerHidden">
      <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="playlistWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>220</y>
+      <width>271</width>
+      <height>201</height>
+     </rect>
     </property>
    </widget>
   </widget>

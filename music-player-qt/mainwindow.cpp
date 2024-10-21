@@ -1,17 +1,20 @@
-#include "mainwindow.h"  // Incluye el archivo de encabezado "mainwindow.h", que contiene la declaración de la clase MainWindow.
-#include "ui_mainwindow.h"  // Incluye el archivo de interfaz de usuario generado automáticamente por Qt Designer.
-#include <QFileDialog>  // Incluye la clase QFileDialog, que proporciona un cuadro de diálogo para seleccionar archivos y directorios.
-#include <QTime>  // Incluye la clase QTime, que se utiliza para manejar y manipular tiempos.
-#include <QFileInfo>  // Incluye la clase QFileInfo, que proporciona información sobre archivos y directorios.
-#include <QDebug>  // Incluye la biblioteca QDebug, que permite imprimir mensajes de depuración en la consola.
-#include <QMessageBox> // Incluye la clase QMessageBox, que permite mostrar diálogos de mensajes al usuario.
-#include <QMutexLocker> // Incluye QMutexLocker para manejar el mutex.
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include <QFileDialog>
+#include <QTime>
+#include <QFileInfo>
+#include <QDebug>
+#include <QMessageBox>
+#include <QMutexLocker>
+#include <QDir>
+#include <QFileInfoList>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , MPlayer(new QMediaPlayer(this))
     , audioOutput(new QAudioOutput(this))
+    , currentIndex(-1)  // Inicializamos el índice actual a -1 (ninguna pista seleccionada)
 {
     ui->setupUi(this);
 
@@ -31,13 +34,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->sldrVolume->setMaximum(100);
     ui->sldrVolume->setValue(30);
 
-    audioOutput->setVolume(ui->sldrVolume->value() / 100.0); // Set volume from slider value
+    audioOutput->setVolume(ui->sldrVolume->value() / 100.0);
 
     connect(MPlayer, &QMediaPlayer::durationChanged, this, &MainWindow::durationChanged);
     connect(MPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::positionChanged);
 
     ui->sldrSeek->setRange(0, 0);
     connect(ui->treeView, &QTreeView::doubleClicked, this, &MainWindow::on_treeView_doubleClicked);
+
+    // Conectamos la señal de doble clic en el widget de lista de reproducción con su correspondiente slot
+    connect(ui->playlistWidget, &QListWidget::doubleClicked, this, &MainWindow::on_playlistWidget_doubleClicked);
 }
 
 MainWindow::~MainWindow()
@@ -93,6 +99,29 @@ void MainWindow::on_actionOpen_File_triggered()
         sPath = folderName;
         dirmodel->setRootPath(sPath);
         ui->treeView->setRootIndex(dirmodel->setRootPath(sPath));
+
+        // Actualizamos la lista de reproducción con los archivos del directorio seleccionado
+        updatePlaylist(sPath);
+    }
+}
+
+// Nueva función para actualizar la lista de reproducción
+void MainWindow::updatePlaylist(const QString &directory)
+{
+    // Limpiamos la lista de reproducción actual
+    ui->playlistWidget->clear();
+    playlist.clear();
+
+    // Obtenemos la lista de archivos en el directorio
+    QDir dir(directory);
+    QStringList filters;
+    filters << "*.mp3" << "*.mp4";
+    QFileInfoList files = dir.entryInfoList(filters, QDir::Files);
+
+    // Añadimos cada archivo a la lista de reproducción
+    for (const QFileInfo &file : files) {
+        ui->playlistWidget->addItem(file.fileName());
+        playlist.append(file.filePath());
     }
 }
 
@@ -105,29 +134,37 @@ void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
 
     QString filePath = dirmodel->filePath(index);
     QFileInfo fileInfo(filePath);
-
-    static bool hasDisplayedWarning = false; // Variable estática para controlar la visualización del mensaje.
+    static bool hasDisplayedWarning = false;
 
     if (fileInfo.isFile()) {
         QString extension = fileInfo.suffix().toLower();
 
         if (extension == "mp3" || extension == "mp4") {
-            MPlayer->setSource(QUrl::fromLocalFile(filePath));
-
-            ui->fileName->setText(fileInfo.fileName());
-            MPlayer->play();
-            IS_Paused = false;
-            hasDisplayedWarning = false; // Restablece el estado si se reproduce un archivo válido.
+            // Llamamos a la nueva función playFile para reproducir el archivo
+            playFile(filePath);
+            hasDisplayedWarning = false;
         } else {
-
-            if (!hasDisplayedWarning) { // Verifica si el mensaje ya ha sido mostrado.
-                hasDisplayedWarning = true; // Marca el mensaje como mostrado.
+            if (!hasDisplayedWarning) {
+                hasDisplayedWarning = true;
                 QMessageBox msgBox;
                 msgBox.setText("El archivo no se puede reproducir");
                 msgBox.exec();
             }
         }
     }
+}
+
+// Nueva función para reproducir un archivo
+void MainWindow::playFile(const QString &filePath)
+{
+    MPlayer->setSource(QUrl::fromLocalFile(filePath));
+    QFileInfo fileInfo(filePath);
+    ui->fileName->setText(fileInfo.fileName());
+    MPlayer->play();
+    IS_Paused = false;
+
+    // Actualizamos el índice actual en la lista de reproducción
+    currentIndex = playlist.indexOf(filePath);
 }
 
 void MainWindow::on_btnStop_clicked()
@@ -137,12 +174,20 @@ void MainWindow::on_btnStop_clicked()
 
 void MainWindow::on_btnPrev_clicked()
 {
-    // Implementación para reproducir la pista anterior.
+    // Implementación para reproducir la pista anterior
+    if (currentIndex > 0) {
+        currentIndex--;
+        playFile(playlist[currentIndex]);
+    }
 }
 
 void MainWindow::on_btnNext_clicked()
 {
-    // Implementación para reproducir la siguiente pista.
+    // Implementación para reproducir la siguiente pista
+    if (currentIndex < playlist.size() - 1) {
+        currentIndex++;
+        playFile(playlist[currentIndex]);
+    }
 }
 
 void MainWindow::on_sldrVolume_valueChanged(int value)
@@ -169,4 +214,13 @@ void MainWindow::on_sldrSeek_sliderMoved(int position)
 void MainWindow::on_sldrSeek_sliderReleased()
 {
     MPlayer->setPosition(ui->sldrSeek->value() * 1000);
+}
+
+// Nuevo slot para manejar el doble clic en el widget de lista de reproducción
+void MainWindow::on_playlistWidget_doubleClicked(const QModelIndex &index)
+{
+    if (index.isValid() && index.row() < playlist.size()) {
+        currentIndex = index.row();
+        playFile(playlist[currentIndex]);
+    }
 }
