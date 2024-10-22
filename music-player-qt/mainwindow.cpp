@@ -14,16 +14,14 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , MPlayer(new QMediaPlayer(this))
     , audioOutput(new QAudioOutput(this))
-    , currentIndex(-1)  // Inicializamos el índice actual a -1 (ninguna pista seleccionada)
+    , currentIndex(-1)
 {
     ui->setupUi(this);
 
     QString sPath = "C:/";
     dirmodel = new QFileSystemModel(this);
     dirmodel->setRootPath(sPath);
-
-    dirmodel->setNameFilters(QStringList() << "*.mp3" << "*.mp4" << "*");
-    dirmodel->setNameFilterDisables(false);
+    dirmodel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs); // Solo mostrar directorios
 
     ui->treeView->setModel(dirmodel);
     ui->treeView->setRootIndex(dirmodel->setRootPath(sPath));
@@ -40,10 +38,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(MPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::positionChanged);
 
     ui->sldrSeek->setRange(0, 0);
-    connect(ui->treeView, &QTreeView::doubleClicked, this, &MainWindow::on_treeView_doubleClicked);
-
-    // Conectamos la señal de doble clic en el widget de lista de reproducción con su correspondiente slot
-    connect(ui->playlistWidget, &QListWidget::doubleClicked, this, &MainWindow::on_playlistWidget_doubleClicked);
 }
 
 MainWindow::~MainWindow()
@@ -99,95 +93,72 @@ void MainWindow::on_actionOpen_File_triggered()
         sPath = folderName;
         dirmodel->setRootPath(sPath);
         ui->treeView->setRootIndex(dirmodel->setRootPath(sPath));
-
-        // Actualizamos la lista de reproducción con los archivos del directorio seleccionado
         updatePlaylist(sPath);
     }
 }
 
-// Nueva función para actualizar la lista de reproducción
 void MainWindow::updatePlaylist(const QString &directory)
 {
-    // Limpiamos la lista de reproducción actual
     ui->playlistWidget->clear();
-    playlist.clear();
-
-    // Obtenemos la lista de archivos en el directorio
-    QDir dir(directory);
+    playlist.clear(); QDir dir(directory);
     QStringList filters;
     filters << "*.mp3" << "*.mp4";
     QFileInfoList files = dir.entryInfoList(filters, QDir::Files);
 
-    // Añadimos cada archivo a la lista de reproducción
     for (const QFileInfo &file : files) {
         ui->playlistWidget->addItem(file.fileName());
         playlist.append(file.filePath());
     }
 }
 
-void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
-{
-    if (!index.isValid()) {
-        qDebug() << "Índice no válido";
-        return;
-    }
-
-    QString filePath = dirmodel->filePath(index);
-    QFileInfo fileInfo(filePath);
-    static bool hasDisplayedWarning = false;
-
-    if (fileInfo.isFile()) {
-        QString extension = fileInfo.suffix().toLower();
-
-        if (extension == "mp3" || extension == "mp4") {
-            // Llamamos a la nueva función playFile para reproducir el archivo
-            playFile(filePath);
-            hasDisplayedWarning = false;
-        } else {
-            if (!hasDisplayedWarning) {
-                hasDisplayedWarning = true;
-                QMessageBox msgBox;
-                msgBox.setText("El archivo no se puede reproducir");
-                msgBox.exec();
-            }
-        }
-    }
-}
-
-// Nueva función para reproducir un archivo
 void MainWindow::playFile(const QString &filePath)
 {
     MPlayer->setSource(QUrl::fromLocalFile(filePath));
     QFileInfo fileInfo(filePath);
-    ui->fileName->setText(fileInfo.fileName());
+    ui->fileName->setText(fileInfo.fileName());  // Mostramos el nombre del archivo
     MPlayer->play();
+    ui->btnPlayPause->setText("Pause");
     IS_Paused = false;
 
-    // Actualizamos el índice actual en la lista de reproducción
+    // Actualizamos el currentIndex para mantener la sincronización con la playlist
     currentIndex = playlist.indexOf(filePath);
 }
 
-void MainWindow::on_btnStop_clicked()
+void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {
-    MPlayer->stop();
+    QString path = dirmodel->filePath(index);
+    updatePlaylist(path);
+}
+
+void MainWindow::on_playlistWidget_doubleClicked(const QModelIndex &index)
+{
+    QString filePath = playlist.at(index.row());
+    playFile(filePath);
 }
 
 void MainWindow::on_btnPrev_clicked()
 {
-    // Implementación para reproducir la pista anterior
     if (currentIndex > 0) {
         currentIndex--;
-        playFile(playlist[currentIndex]);
+        QString filePath = playlist.at(currentIndex);
+        playFile(filePath);
     }
 }
 
 void MainWindow::on_btnNext_clicked()
 {
-    // Implementación para reproducir la siguiente pista
     if (currentIndex < playlist.size() - 1) {
         currentIndex++;
-        playFile(playlist[currentIndex]);
+        QString filePath = playlist.at(currentIndex);
+        playFile(filePath);
     }
+}
+
+void MainWindow::on_btnStop_clicked()
+{
+    MPlayer->stop();
+    ui->btnPlayPause->setText("Play");
+    IS_Paused = true;
 }
 
 void MainWindow::on_sldrVolume_valueChanged(int value)
@@ -197,12 +168,14 @@ void MainWindow::on_sldrVolume_valueChanged(int value)
 
 void MainWindow::on_btnPlayPause_clicked()
 {
-    if (!IS_Paused) {
-        MPlayer->pause();
-        IS_Paused = true;
-    } else {
+    if (IS_Paused) {
         MPlayer->play();
+        ui->btnPlayPause->setText("Pause");
         IS_Paused = false;
+    } else {
+        MPlayer->pause();
+        ui->btnPlayPause->setText("Play");
+        IS_Paused = true;
     }
 }
 
@@ -214,13 +187,4 @@ void MainWindow::on_sldrSeek_sliderMoved(int position)
 void MainWindow::on_sldrSeek_sliderReleased()
 {
     MPlayer->setPosition(ui->sldrSeek->value() * 1000);
-}
-
-// Nuevo slot para manejar el doble clic en el widget de lista de reproducción
-void MainWindow::on_playlistWidget_doubleClicked(const QModelIndex &index)
-{
-    if (index.isValid() && index.row() < playlist.size()) {
-        currentIndex = index.row();
-        playFile(playlist[currentIndex]);
-    }
 }

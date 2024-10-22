@@ -364,7 +364,7 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>&gt; / ||</string>
+     <string>...</string>
     </property>
    </widget>
    <widget class="QTreeView" name="treeView">
