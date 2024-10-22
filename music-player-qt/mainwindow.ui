@@ -373,7 +373,7 @@ QPushButton:pressed {
       <x>10</x>
       <y>10</y>
       <width>271</width>
-      <height>201</height>
+      <height>202</height>
      </rect>
     </property>
     <property name="contextMenuPolicy">
@@ -408,8 +408,29 @@ QTreeView::branch {
       <x>10</x>
       <y>220</y>
       <width>271</width>
-      <height>201</height>
+      <height>196</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QListWidget {
+    background-color: #212121; /* Color de fondo gris oscuro */
+    border: 2px solid black; /* Borde negro */
+}
+
+QListWidget::item {
+    color: white; /* Color del texto de los elementos */
+    padding: 5px; /* Espaciado interno */
+}
+
+QListWidget::item:selected {
+    background-color: #424242; /* Color de fondo de elementos seleccionados */
+    color: white; /* Color del texto cuando se selecciona */
+}
+
+QListWidget::item:hover {
+    background-color: #333333; /* Color de fondo cuando el ratón pasa sobre el elemento */
+}
+</string>
     </property>
    </widget>
   </widget>
@@ -419,7 +440,7 @@ QTreeView::branch {
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>21</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOPen">
