@@ -33,7 +33,11 @@ private slots:
     void on_sldrSeek_sliderReleased();
     void on_treeView_clicked(const QModelIndex &index);
     void on_playlistWidget_doubleClicked(const QModelIndex &index);
-
+    void setupMarquee(const QString &text);
+    void startMarquee();
+    void stopMarquee();
+    void focusOutEvent(QFocusEvent *event);
+    void focusInEvent(QFocusEvent *event);
 private:
     void updateDuration(qint64 duration);
     void updatePlaylist(const QString &directory);
@@ -49,6 +53,9 @@ private:
     QString sPath;
     QStringList playlist;
     int currentIndex;
+
+    QTimer *marqueeTimer;
+    bool isMarqueeNeeded;
 };
 
 #endif // MAINWINDOW_H

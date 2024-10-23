@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     , MPlayer(new QMediaPlayer(this))
     , audioOutput(new QAudioOutput(this))
     , currentIndex(-1)
+    , marqueeTimer(nullptr)  // Inicializar el puntero
+    , isMarqueeNeeded(false)
 {
     ui->setupUi(this);
 
@@ -48,9 +50,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    stopMarquee();
+    if (marqueeTimer) {
+        delete marqueeTimer;
+    }
     delete ui;
 }
-
 void MainWindow::updateDuration(qint64 duration)
 {
     if (duration && Mduration) {
@@ -78,6 +83,19 @@ void MainWindow::positionChanged(qint64 position)
     if (!ui->sldrSeek->isSliderDown()) {
         updateDuration(position / 1000);
         ui->sldrSeek->setValue(position / 1000);
+    }
+}
+
+void MainWindow::focusOutEvent(QFocusEvent *event)
+{
+    QMainWindow::focusOutEvent(event);
+    stopMarquee();
+}
+
+void MainWindow::focusInEvent(QFocusEvent *event)
+{
+    QMainWindow::focusInEvent(event); if (isMarqueeNeeded) {
+        startMarquee();
     }
 }
 
@@ -121,12 +139,13 @@ void MainWindow::playFile(const QString &filePath)
 {
     MPlayer->setSource(QUrl::fromLocalFile(filePath));
     QFileInfo fileInfo(filePath);
-    ui->fileName->setText(fileInfo.fileName());  // Mostramos el nombre del archivo
+    QString fileName = fileInfo.fileName();
+
+    setupMarquee(fileName);  // Configura el efecto marquee
+
     MPlayer->play();
     ui->btnPlayPause->setText("Pause");
     IS_Paused = false;
-
-    // Actualizamos el currentIndex para mantener la sincronización con la playlist
     currentIndex = playlist.indexOf(filePath);
 }
 
@@ -188,6 +207,53 @@ void MainWindow::on_btnPlayPause_clicked()
 void MainWindow::on_sldrSeek_sliderMoved(int position)
 {
     MPlayer->setPosition(position * 1000);
+}
+
+void MainWindow::setupMarquee(const QString &text)
+{
+    // Detener el marquee anterior si existe
+    if (marqueeTimer) {
+        stopMarquee();
+    }
+
+    // Verificar si el texto es más largo que el label
+    QFontMetrics metrics(ui->fileName->font());
+    int textWidth = metrics.horizontalAdvance(text);
+    isMarqueeNeeded = (textWidth > ui->fileName->width());
+
+    if (isMarqueeNeeded) {
+        // Inicializar el timer si aún no existe
+        if (!marqueeTimer) {
+            marqueeTimer = new QTimer(this);
+            connect(marqueeTimer, &QTimer::timeout, this, [this]() {
+                QString currentText = ui->fileName->text();
+                currentText = currentText.mid(1) + currentText.at(0);
+                ui->fileName->setText(currentText);
+            });
+        }
+
+        // Preparar el texto para el efecto marquee
+        QString paddedText = text + "    ";  // Añadir espacio entre repeticiones
+        ui->fileName->setText(paddedText);
+        startMarquee();
+    } else {
+        // Si el texto cabe, solo mostrarlo normalmente
+        ui->fileName->setText(text);
+    }
+}
+
+void MainWindow::startMarquee()
+{
+    if (isMarqueeNeeded && marqueeTimer) {
+        marqueeTimer->start(200);  // Ajusta este valor para controlar la velocidad
+    }
+}
+
+void MainWindow::stopMarquee()
+{
+    if (marqueeTimer) {
+        marqueeTimer->stop();
+    }
 }
 
 void MainWindow::on_sldrSeek_sliderReleased()

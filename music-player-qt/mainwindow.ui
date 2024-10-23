@@ -310,7 +310,7 @@ QLabel::before {
 </string>
     </property>
     <property name="text">
-     <string>Click &quot;open&quot; to choose a folder</string>
+     <string>Choose a folder to start</string>
     </property>
    </widget>
    <widget class="QLabel" name="currentTime">
@@ -354,7 +354,7 @@ QLabel::before {
    <widget class="QLabel" name="totalTime">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>930</x>
       <y>460</y>
       <width>81</width>
       <height>31</height>
