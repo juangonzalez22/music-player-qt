@@ -26,6 +26,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeView->setModel(dirmodel);
     ui->treeView->setRootIndex(dirmodel->setRootPath(sPath));
 
+    // Ocultar las columnas que no deseas mostrar
+    ui->treeView->setColumnHidden(1, true); // Ocultar columna de tamaño
+    ui->treeView->setColumnHidden(2, true); // Ocultar columna de tipo
+    ui->treeView->setColumnHidden(3, true); // Ocultar columna de fecha
+
     MPlayer->setAudioOutput(audioOutput);
 
     ui->sldrVolume->setMinimum(0);
@@ -39,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->sldrSeek->setRange(0, 0);
 }
+
 
 MainWindow::~MainWindow()
 {

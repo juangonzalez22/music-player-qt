@@ -51,8 +51,8 @@
     </property>
     <property name="styleSheet">
      <string notr="true">QFrame {
-    background-color: #212121; /* Color de fondo gris oscuro */
-    border: 2px solid black; /* Borde negro */
+    background-color:  rgba(20, 20, 20, 0.95); /* Color de fondo gris oscuro */
+	border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
 }
 </string>
     </property>
@@ -486,18 +486,43 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QTreeView {
-    background-color: #212121; /* Color de fondo gris oscuro */
-    border: 2px solid black; /* Borde negro */
+    background-color: rgba(20, 20, 20, 0.95);   /* Fondo oscuro */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+    padding: 5px;                              /* Espaciado */
+    color: #D0D0D0;                            /* Color del texto */
 }
 
 QTreeView::item {
-    color: white; /* Color del texto */
-    padding: 5px; /* Espaciado interno */
+    background-color: rgba(35, 35, 35, 0.8);    /* Fondo de los ítems */
+    border: 1px solid rgba(255, 255, 255, 0.08);/* Borde sutil de los ítems */
+    padding: 4px;                              /* Espaciado interno */
+    color: #B0B0B0;                            /* Color de texto de los ítems */
+    border-radius: 0px;                        /* Sin bordes redondeados */
 }
 
-QTreeView::branch {
-    background-color: #212121; /* Color de fondo de las ramas */
+QTreeView::item:selected {
+    background-color: rgba(70, 130, 180, 0.7);  /* Fondo azul oscuro para ítems seleccionados */
+    color: #FFFFFF;                            /* Texto blanco en ítems seleccionados */
 }
+
+QTreeView::item:hover {
+    background-color: rgba(100, 149, 237, 0.4); /* Fondo azul oscuro al pasar el mouse */
+    color: #E0E0E0;                            /* Color de texto más claro en hover */
+}
+
+QHeaderView::section {
+    background-color: rgba(30, 30, 30, 0.95);   /* Fondo oscuro para las cabeceras */
+    color: #FFFFFF;                             /* Texto blanco para las cabeceras */
+    padding: 4px;
+    border: none;                               /* Sin borde */
+}
+
+QTreeView::branch:has-children:!has-siblings {
+    background-color: transparent; /* Fondo transparente para las ramas */
+}
+
+
+
 </string>
     </property>
     <property name="animated">
@@ -523,22 +548,28 @@ QTreeView::branch {
     </property>
     <property name="styleSheet">
      <string notr="true">QListWidget {
-    background-color: #212121; /* Color de fondo gris oscuro */
-    border: 2px solid black; /* Borde negro */
+    background-color: rgba(20, 20, 20, 0.95);   /* Fondo oscuro */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+    padding: 5px;                              /* Espaciado */
+    color: #D0D0D0;                            /* Color del texto */
 }
 
 QListWidget::item {
-    color: white; /* Color del texto de los elementos */
-    padding: 5px; /* Espaciado interno */
+    background-color: rgba(35, 35, 35, 0.8);    /* Fondo de los ítems */
+    border: 1px solid rgba(255, 255, 255, 0.08);/* Borde sutil de los ítems */
+    padding: 4px;                              /* Espaciado interno */
+    color: #B0B0B0;                            /* Color de texto de los ítems */
+    border-radius: 0px;                        /* Sin bordes redondeados */
 }
 
 QListWidget::item:selected {
-    background-color: #424242; /* Color de fondo de elementos seleccionados */
-    color: white; /* Color del texto cuando se selecciona */
+    background-color: rgba(35, 35, 35, 0.8);  /* Fondo de ítem seleccionado (sin cambios) */
+    color: #E0E0E0;                            /* Texto más claro en ítem seleccionado */
 }
 
 QListWidget::item:hover {
-    background-color: #333333; /* Color de fondo cuando el ratón pasa sobre el elemento */
+    background-color: rgba(100, 149, 237, 0.4); /* Fondo azul oscuro al pasar el mouse */
+    color: #E0E0E0;                            /* Color de texto más claro en hover */
 }
 </string>
     </property>
