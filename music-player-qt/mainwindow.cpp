@@ -8,6 +8,8 @@
 #include <QMutexLocker>
 #include <QDir>
 #include <QFileInfoList>
+#include <QVBoxLayout>
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     , MPlayer(new QMediaPlayer(this))
     , audioOutput(new QAudioOutput(this))
     , currentIndex(-1)
-    , marqueeTimer(nullptr)  // Inicializar el puntero
+    , videoWidget(new QVideoWidget(this))
+    , marqueeTimer(nullptr)
     , isMarqueeNeeded(false)
 {
     ui->setupUi(this);
@@ -23,22 +26,26 @@ MainWindow::MainWindow(QWidget *parent)
     QString sPath = "C:/";
     dirmodel = new QFileSystemModel(this);
     dirmodel->setRootPath(sPath);
-    dirmodel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs); // Solo mostrar directorios
+    dirmodel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
 
     ui->treeView->setModel(dirmodel);
     ui->treeView->setRootIndex(dirmodel->setRootPath(sPath));
 
-    // Ocultar las columnas que no deseas mostrar
+    // Ocultar columnas no deseadas
     ui->treeView->setColumnHidden(1, true); // Ocultar columna de tamaño
     ui->treeView->setColumnHidden(2, true); // Ocultar columna de tipo
     ui->treeView->setColumnHidden(3, true); // Ocultar columna de fecha
 
     MPlayer->setAudioOutput(audioOutput);
 
+    // Configurar el layout del QGroupBox
+    QVBoxLayout *layout = new QVBoxLayout(ui->groupBox);
+    layout->addWidget(videoWidget);
+    MPlayer->setVideoOutput(videoWidget);
+
     ui->sldrVolume->setMinimum(0);
     ui->sldrVolume->setMaximum(100);
     ui->sldrVolume->setValue(30);
-
     audioOutput->setVolume(ui->sldrVolume->value() / 100.0);
 
     connect(MPlayer, &QMediaPlayer::durationChanged, this, &MainWindow::durationChanged);
@@ -46,7 +53,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->sldrSeek->setRange(0, 0);
 }
-
 
 MainWindow::~MainWindow()
 {
@@ -56,6 +62,7 @@ MainWindow::~MainWindow()
     }
     delete ui;
 }
+
 void MainWindow::updateDuration(qint64 duration)
 {
     if (duration && Mduration) {
@@ -94,7 +101,8 @@ void MainWindow::focusOutEvent(QFocusEvent *event)
 
 void MainWindow::focusInEvent(QFocusEvent *event)
 {
-    QMainWindow::focusInEvent(event); if (isMarqueeNeeded) {
+    QMainWindow::focusInEvent(event);
+    if (isMarqueeNeeded) {
         startMarquee();
     }
 }
@@ -112,7 +120,7 @@ void MainWindow::on_btnMute_clicked()
 
 void MainWindow::on_actionOpen_File_triggered()
 {
-    QString folderName = QFileDialog::getExistingDirectory(this, tr("Select Directory"), "");
+    QString folderName = QFileDialog::getExistingDirectory(this, tr("Select Directory "), "");
     if (!folderName.isEmpty()) {
         sPath = folderName;
         dirmodel->setRootPath(sPath);
@@ -124,9 +132,10 @@ void MainWindow::on_actionOpen_File_triggered()
 void MainWindow::updatePlaylist(const QString &directory)
 {
     ui->playlistWidget->clear();
-    playlist.clear(); QDir dir(directory);
+    playlist.clear();
+    QDir dir(directory);
     QStringList filters;
-    filters << "*.mp3" << "*.mp4";
+    filters << "*.mp3" << "*.mp4" << "*.m4a" << "*.wav" << "*.m4v";
     QFileInfoList files = dir.entryInfoList(filters, QDir::Files);
 
     for (const QFileInfo &file : files) {
@@ -137,16 +146,26 @@ void MainWindow::updatePlaylist(const QString &directory)
 
 void MainWindow::playFile(const QString &filePath)
 {
-    MPlayer->setSource(QUrl::fromLocalFile(filePath));
     QFileInfo fileInfo(filePath);
     QString fileName = fileInfo.fileName();
 
-    setupMarquee(fileName);  // Configura el efecto marquee
-
-    MPlayer->play();
-    ui->btnPlayPause->setText("Pause");
-    IS_Paused = false;
-    currentIndex = playlist.indexOf(filePath);
+    // Verificar si el archivo es un video
+    if (fileInfo.suffix() == "mp4" ||fileInfo.suffix() == "m4v") {
+        MPlayer->setSource(QUrl::fromLocalFile(filePath));
+        setupMarquee(fileName);
+        MPlayer->play();
+        ui->btnPlayPause->setText("Pause");
+        IS_Paused = false;
+        currentIndex = playlist.indexOf(filePath);
+    } else {
+        // Si no es un video, manejarlo como un audio
+        MPlayer->setSource(QUrl::fromLocalFile(filePath));
+        setupMarquee(fileName);
+        MPlayer->play();
+        ui->btnPlayPause->setText("Pause");
+        IS_Paused = false;
+        currentIndex = playlist.indexOf(filePath);
+    }
 }
 
 void MainWindow::on_treeView_clicked(const QModelIndex &index)

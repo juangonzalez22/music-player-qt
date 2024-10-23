@@ -5,6 +5,8 @@
 #include <QtMultimedia>
 #include <QtCore>
 #include <QtWidgets>
+#include <QtGui>
+#include <QtMultimediaWidgets>
 #include <QFileSystemModel>
 
 QT_BEGIN_NAMESPACE
@@ -53,6 +55,7 @@ private:
     QString sPath;
     QStringList playlist;
     int currentIndex;
+    QVideoWidget *videoWidget;
 
     QTimer *marqueeTimer;
     bool isMarqueeNeeded;

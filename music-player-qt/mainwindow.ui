@@ -40,29 +40,6 @@
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="frame_2">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>10</y>
-      <width>720</width>
-      <height>405</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QFrame {
-    background-color:  rgba(20, 20, 20, 0.95); /* Color de fondo gris oscuro */
-	border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
-}
-</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Shadow::Raised</enum>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnStop">
     <property name="geometry">
      <rect>
@@ -572,6 +549,19 @@ QListWidget::item:hover {
     color: #E0E0E0;                            /* Color de texto más claro en hover */
 }
 </string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>10</y>
+      <width>720</width>
+      <height>405</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
     </property>
    </widget>
   </widget>
