@@ -72,6 +72,12 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Microsoft JhengHei UI Light</family>
+      <pointsize>-1</pointsize>
+     </font>
+    </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
     background-color: #D3D3D3; /* Color de fondo gris claro */
@@ -103,6 +109,12 @@ QPushButton:pressed {
       <width>41</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft JhengHei UI Light</family>
+      <pointsize>-1</pointsize>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
@@ -234,6 +246,12 @@ QSlider::handle:horizontal:pressed {
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Microsoft JhengHei UI Light</family>
+      <pointsize>-1</pointsize>
+     </font>
+    </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
     background-color: #D3D3D3; /* Color de fondo gris claro */
@@ -261,13 +279,38 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>431</y>
-      <width>201</width>
-      <height>20</height>
+      <y>420</y>
+      <width>281</width>
+      <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Microsoft JhengHei UI Light</family>
+      <pointsize>-1</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: white;                          /* Color del texto */
+    font-size: 18px;                       /* Tamaño de fuente */
+    background-color: rgba(0, 0, 0, 0);    /* Fondo transparente */
+    padding: 5px;                          /* Espaciado interno */
+    border: none;                          /* Sin borde */
+}
+
+QLabel::before {
+    content: &quot;&quot;;                           /* Necesario para el pseudo-elemento */
+    color: rgba(0, 0, 0, 0.5);            /* Color de la sombra (negro con opacidad) */
+    position: absolute;                    /* Posicionamiento absoluto */
+    left: 2px;                             /* Desplazamiento horizontal */
+    top: 2px;                              /* Desplazamiento vertical */
+    font-size: 18px;                       /* Tamaño de fuente igual al del label */
+}
+</string>
+    </property>
     <property name="text">
-     <string>FILE_NAME</string>
+     <string>Click &quot;open&quot; to choose a folder</string>
     </property>
    </widget>
    <widget class="QLabel" name="currentTime">
@@ -275,9 +318,34 @@ QPushButton:pressed {
      <rect>
       <x>10</x>
       <y>460</y>
-      <width>71</width>
-      <height>24</height>
+      <width>111</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft JhengHei UI Light</family>
+      <pointsize>-1</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: white;                          /* Color del texto */
+    font-size: 14px;                       /* Tamaño de fuente */
+    background-color: rgba(0, 0, 0, 0);    /* Fondo transparente */
+    padding: 5px;                          /* Espaciado interno */
+    border: none;                          /* Sin borde */
+}
+
+QLabel::before {
+    content: &quot;&quot;;                           /* Necesario para el pseudo-elemento */
+    color: rgba(0, 0, 0, 0.5);            /* Color de la sombra (negro con opacidad) */
+    position: absolute;                    /* Posicionamiento absoluto */
+    left: 2px;                             /* Desplazamiento horizontal */
+    top: 2px;                              /* Desplazamiento vertical */
+    font-size: 14px;                       /* Tamaño de fuente igual al del label */
+}</string>
     </property>
     <property name="text">
      <string>##:##</string>
@@ -286,19 +354,39 @@ QPushButton:pressed {
    <widget class="QLabel" name="totalTime">
     <property name="geometry">
      <rect>
-      <x>960</x>
+      <x>950</x>
       <y>460</y>
-      <width>71</width>
-      <height>24</height>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <fontweight>Light</fontweight>
+      <family>Microsoft JhengHei UI Light</family>
+      <pointsize>-1</pointsize>
+      <bold>true</bold>
      </font>
     </property>
     <property name="layoutDirection">
      <enum>Qt::LayoutDirection::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: white;                          /* Color del texto */
+    font-size: 14px;                       /* Tamaño de fuente */
+    background-color: rgba(0, 0, 0, 0);    /* Fondo transparente */
+    padding: 5px;                          /* Espaciado interno */
+    border: none;                          /* Sin borde */
+}
+
+QLabel::before {
+    content: &quot;&quot;;                           /* Necesario para el pseudo-elemento */
+    color: rgba(0, 0, 0, 0.5);            /* Color de la sombra (negro con opacidad) */
+    position: absolute;                    /* Posicionamiento absoluto */
+    left: 2px;                             /* Desplazamiento horizontal */
+    top: 2px;                              /* Desplazamiento vertical */
+    font-size: 10px;                       /* Tamaño de fuente igual al del label */
+}</string>
     </property>
     <property name="text">
      <string>##:##</string>
@@ -312,6 +400,12 @@ QPushButton:pressed {
       <width>41</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft JhengHei UI Light</family>
+      <pointsize>-1</pointsize>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
@@ -345,6 +439,12 @@ QPushButton:pressed {
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Microsoft JhengHei UI Light</family>
+      <pointsize>-1</pointsize>
+     </font>
+    </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
     background-color: #D3D3D3; /* Color de fondo gris claro */
@@ -375,6 +475,11 @@ QPushButton:pressed {
       <width>271</width>
       <height>202</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Microsoft JhengHei UI Light</family>
+     </font>
     </property>
     <property name="contextMenuPolicy">
      <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
@@ -411,6 +516,11 @@ QTreeView::branch {
       <height>196</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Microsoft JhengHei UI</family>
+     </font>
+    </property>
     <property name="styleSheet">
      <string notr="true">QListWidget {
     background-color: #212121; /* Color de fondo gris oscuro */
@@ -440,10 +550,20 @@ QListWidget::item:hover {
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>29</height>
+     <height>28</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft JhengHei UI</family>
+    </font>
+   </property>
    <widget class="QMenu" name="menuOPen">
+    <property name="font">
+     <font>
+      <family>Microsoft JhengHei UI</family>
+     </font>
+    </property>
     <property name="title">
      <string>Open</string>
     </property>
@@ -455,6 +575,11 @@ QListWidget::item:hover {
   <action name="actionOpen_File">
    <property name="text">
     <string>Open Folder</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft JhengHei UI</family>
+    </font>
    </property>
   </action>
  </widget>
