@@ -11,6 +11,7 @@
 #include <QVBoxLayout>
 #include <QTimer>
 #include <QCoreApplication>
+#include <QIcon>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,6 +25,10 @@ MainWindow::MainWindow(QWidget *parent)
     , isMarqueeNeeded(false)
 {
     ui->setupUi(this);
+
+    setWindowIcon(QIcon("icon.ico"));
+
+    setWindowTitle("Pro MediaPlayer");
 
     QString sPath = "C:/";
     dirmodel = new QFileSystemModel(this);
@@ -152,6 +157,8 @@ void MainWindow::playFile(const QString &filePath)
 {
     QFileInfo fileInfo(filePath);
     QString fileName = fileInfo.fileName();
+
+    setWindowTitle("Pro MediaPlayer: " + fileName);
 
     if (fileInfo.suffix() == "mp4" || fileInfo.suffix() == "m4v" || fileInfo.suffix() == "mkv") {
         // Reproducir video normalmente
