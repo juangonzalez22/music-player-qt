@@ -10,6 +10,7 @@
 #include <QFileInfoList>
 #include <QVBoxLayout>
 #include <QTimer>
+#include <QCoreApplication>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -180,7 +181,7 @@ void MainWindow::playFile(const QString &filePath)
 
 void MainWindow::playPlaceholderVideo()
 {
-    QString placeholderVideoPath = "C:\\Users\\Admin\\Documents\\GitHub\\music-player-qt\\music-player-qt\\placeholder.mp4";  // Ruta del video placeholder
+    QString placeholderVideoPath = QDir::currentPath() + "/placeholder.mp4";  // Ruta relativa al ejecutable
 
     if (QFile::exists(placeholderVideoPath)) {
         // Reutilizar el mismo videoWidget para el backgroundPlayer
@@ -192,15 +193,12 @@ void MainWindow::playPlaceholderVideo()
             backgroundPlayer->setSource(QUrl::fromLocalFile(placeholderVideoPath));
             backgroundPlayer->setLoops(QMediaPlayer::Infinite);  // Reproducir en bucle
             backgroundPlayer->play();
-            qDebug() << "Reproduciendo video placeholder en bucle.";
+            qDebug() << "Reproduciendo video placeholder en bucle desde:" << placeholderVideoPath;
         });
     } else {
-        qDebug() << "El archivo de video placeholder no existe en la ruta especificada.";
+        qDebug() << "El archivo de video placeholder no existe en la ruta especificada:" << placeholderVideoPath;
     }
 }
-
-
-
 
 
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
