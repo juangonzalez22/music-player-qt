@@ -40,6 +40,7 @@ private slots:
     void stopMarquee();
     void focusOutEvent(QFocusEvent *event);
     void focusInEvent(QFocusEvent *event);
+    void playPlaceholderVideo();
 private:
     void updateDuration(qint64 duration);
     void updatePlaylist(const QString &directory);
@@ -49,6 +50,7 @@ private:
     bool IS_Muted = false;
     bool IS_Paused = true;
     QMediaPlayer *MPlayer;
+    QMediaPlayer *backgroundPlayer;
     QAudioOutput *audioOutput;
     qint64 Mduration;
     QFileSystemModel *dirmodel;

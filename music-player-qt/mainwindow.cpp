@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     , audioOutput(new QAudioOutput(this))
     , currentIndex(-1)
     , videoWidget(new QVideoWidget(this))
+    , backgroundPlayer(new QMediaPlayer(this))
     , marqueeTimer(nullptr)
     , isMarqueeNeeded(false)
 {
@@ -37,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeView->setColumnHidden(3, true); // Ocultar columna de fecha
 
     MPlayer->setAudioOutput(audioOutput);
+
+    backgroundPlayer->setVideoOutput(videoWidget);
 
     // Configurar el layout del QGroupBox
     QVBoxLayout *layout = new QVBoxLayout(ui->groupBox);
@@ -135,7 +138,7 @@ void MainWindow::updatePlaylist(const QString &directory)
     playlist.clear();
     QDir dir(directory);
     QStringList filters;
-    filters << "*.mp3" << "*.mp4" << "*.m4a" << "*.wav" << "*.m4v";
+    filters << "*.mp3" << "*.mp4" << "*.m4a" << "*.wav" << "*.m4v" << "*.mkv";
     QFileInfoList files = dir.entryInfoList(filters, QDir::Files);
 
     for (const QFileInfo &file : files) {
@@ -149,24 +152,56 @@ void MainWindow::playFile(const QString &filePath)
     QFileInfo fileInfo(filePath);
     QString fileName = fileInfo.fileName();
 
-    // Verificar si el archivo es un video
-    if (fileInfo.suffix() == "mp4" ||fileInfo.suffix() == "m4v") {
+    if (fileInfo.suffix() == "mp4" || fileInfo.suffix() == "m4v" || fileInfo.suffix() == "mkv") {
+        // Reproducir video normalmente
+        backgroundPlayer->stop();  // Detener el video de fondo si se está reproduciendo
+        MPlayer->setVideoOutput(videoWidget);  // Usar el mismo videoWidget para videos normales
         MPlayer->setSource(QUrl::fromLocalFile(filePath));
         setupMarquee(fileName);
+        videoWidget->show();  // Asegurarse de que el videoWidget esté visible
         MPlayer->play();
         ui->btnPlayPause->setText("Pause");
         IS_Paused = false;
         currentIndex = playlist.indexOf(filePath);
     } else {
-        // Si no es un video, manejarlo como un audio
+        // Si es un archivo de audio, reproducir el audio
+        MPlayer->setVideoOutput(nullptr);  // Asegurarse de que no utilice el QVideoWidget
         MPlayer->setSource(QUrl::fromLocalFile(filePath));
         setupMarquee(fileName);
         MPlayer->play();
         ui->btnPlayPause->setText("Pause");
         IS_Paused = false;
         currentIndex = playlist.indexOf(filePath);
+
+        // Reproducir el video "placeholder" en bucle usando el mismo videoWidget
+        playPlaceholderVideo();
     }
 }
+
+void MainWindow::playPlaceholderVideo()
+{
+    QString placeholderVideoPath = "C:\\Users\\Admin\\Documents\\GitHub\\music-player-qt\\music-player-qt\\placeholder.mp4";  // Ruta del video placeholder
+
+    if (QFile::exists(placeholderVideoPath)) {
+        // Reutilizar el mismo videoWidget para el backgroundPlayer
+        videoWidget->show();  // Asegurarse de que el videoWidget esté visible
+        backgroundPlayer->stop();
+        backgroundPlayer->setVideoOutput(videoWidget);  // Usar el videoWidget para el placeholder
+
+        QTimer::singleShot(500, [this, placeholderVideoPath]() {
+            backgroundPlayer->setSource(QUrl::fromLocalFile(placeholderVideoPath));
+            backgroundPlayer->setLoops(QMediaPlayer::Infinite);  // Reproducir en bucle
+            backgroundPlayer->play();
+            qDebug() << "Reproduciendo video placeholder en bucle.";
+        });
+    } else {
+        qDebug() << "El archivo de video placeholder no existe en la ruta especificada.";
+    }
+}
+
+
+
+
 
 void MainWindow::on_treeView_clicked(const QModelIndex &index)
 {

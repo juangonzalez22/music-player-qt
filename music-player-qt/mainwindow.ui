@@ -560,6 +560,32 @@ QListWidget::item:hover {
       <height>405</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QGroupBox {
+    background-color: rgba(20, 20, 20, 0.95);   /* Fondo oscuro */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+    padding: 10px;                              /* Espaciado interno del grupo */
+    color: #D0D0D0;                            /* Color del texto */
+}
+
+QGroupBox::title {
+    background-color: transparent;              /* Fondo transparente para el título */
+    color: #D0D0D0;                            /* Color del texto del título */
+    padding: 5px;                              /* Espaciado del título */
+}
+
+QGroupBox::indicator {
+    background-color: rgba(35, 35, 35, 0.8);    /* Fondo de los indicadores (como checkboxes o radio buttons) */
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Borde sutil para los indicadores */
+    padding: 4px;                              /* Espaciado interno para indicadores */
+}
+
+QGroupBox::indicator:checked {
+    background-color: rgba(100, 149, 237, 0.4); /* Fondo al estar chequeado (ej. checkbox) */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde más marcado para el estado chequeado */
+}
+</string>
+    </property>
     <property name="title">
      <string/>
     </property>
