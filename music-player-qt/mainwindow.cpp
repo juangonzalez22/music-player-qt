@@ -26,6 +26,23 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QSize iconSize(24, 24);
+
+    ui->btnPlayPause->setIcon(QIcon(":/icons/play.png"));
+    ui->btnPlayPause->setIconSize(iconSize);
+
+    ui->btnStop->setIcon(QIcon(":/icons/stop.png"));
+    ui->btnStop->setIconSize(iconSize);
+
+    ui->btnMute->setIcon(QIcon(":/icons/volume.png")); // Usar el ícono de volumen por defecto
+    ui->btnMute->setIconSize(iconSize);
+
+    ui->btnPrev->setIcon(QIcon(":/icons/prev.png"));
+    ui->btnPrev->setIconSize(iconSize);
+
+    ui->btnNext->setIcon(QIcon(":/icons/next.png"));
+    ui->btnNext->setIconSize(iconSize);
+
     setWindowIcon(QIcon("icon.ico"));
 
     setWindowTitle("Pro MediaPlayer");
@@ -120,9 +137,11 @@ void MainWindow::on_btnMute_clicked()
 {
     if (!IS_Muted) {
         audioOutput->setVolume(0);
+        ui->btnMute->setIcon(QIcon(":/icons/mute.png")); // Cambiar a ícono de mute
         IS_Muted = true;
     } else {
         audioOutput->setVolume(ui->sldrVolume->value() / 100.0);
+        ui->btnMute->setIcon(QIcon(":/icons/volume.png")); // Cambiar a ícono de volumen
         IS_Muted = false;
     }
 }
@@ -168,7 +187,7 @@ void MainWindow::playFile(const QString &filePath)
         setupMarquee(fileName);
         videoWidget->show();  // Asegurarse de que el videoWidget esté visible
         MPlayer->play();
-        ui->btnPlayPause->setText("Pause");
+        ui->btnPlayPause->setIcon(QIcon(":/icons/pause.png")); // Cambiar a ícono de pausa;
         IS_Paused = false;
         currentIndex = playlist.indexOf(filePath);
     } else {
@@ -177,7 +196,7 @@ void MainWindow::playFile(const QString &filePath)
         MPlayer->setSource(QUrl::fromLocalFile(filePath));
         setupMarquee(fileName);
         MPlayer->play();
-        ui->btnPlayPause->setText("Pause");
+        ui->btnPlayPause->setIcon(QIcon(":/icons/pause.png")); // Cambiar a ícono de pausa;
         IS_Paused = false;
         currentIndex = playlist.indexOf(filePath);
 
@@ -241,7 +260,7 @@ void MainWindow::on_btnNext_clicked()
 void MainWindow::on_btnStop_clicked()
 {
     MPlayer->stop();
-    ui->btnPlayPause->setText("Play");
+    ui->btnPlayPause->setIcon(QIcon(":/icons/play.png")); // Cambiar a ícono de play;
     IS_Paused = true;
 }
 
@@ -254,11 +273,11 @@ void MainWindow::on_btnPlayPause_clicked()
 {
     if (IS_Paused) {
         MPlayer->play();
-        ui->btnPlayPause->setText("Pause");
+        ui->btnPlayPause->setIcon(QIcon(":/icons/pause.png")); // Cambiar a ícono de pausa;
         IS_Paused = false;
     } else {
         MPlayer->pause();
-        ui->btnPlayPause->setText("Play");
+         ui->btnPlayPause->setIcon(QIcon(":/icons/play.png")); // Cambiar a ícono de play;
         IS_Paused = true;
     }
 }

@@ -47,3 +47,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 # Esta última línea añade "target" a la lista de instalaciones si no está vacía.
 # Esto significa que, si la variable target.path tiene una ruta definida, el objetivo de instalación se añade a la lista de instalaciones (INSTALLS), lo que permite que se copie correctamente durante la instalación del proyecto.
 !isEmpty(target.path): INSTALLS += target
+
+#Añadimos un archivo de recursos para los íconos de los botones de la interfaz.
+RESOURCES += \
+    resources.qrc
