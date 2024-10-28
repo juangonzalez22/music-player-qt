@@ -284,16 +284,12 @@ void MainWindow::setupMarquee(const QString &text)
         // Inicializar el timer si aún no existe
         if (!marqueeTimer) {
             marqueeTimer = new QTimer(this);
-            connect(marqueeTimer, &QTimer::timeout, this, [this]() {
-                QString currentText = ui->fileName->text();
-                currentText = currentText.mid(1) + currentText.at(0);
-                ui->fileName->setText(currentText);
-            });
+            connect(marqueeTimer, &QTimer::timeout, this, &MainWindow::updateMarqueePosition);
         }
 
         // Preparar el texto para el efecto marquee
-        QString paddedText = text + "    ";  // Añadir espacio entre repeticiones
-        ui->fileName->setText(paddedText);
+        marqueeText = text + "    " + text;  // Duplicar el texto para un efecto continuo
+        marqueeOffset = 0;
         startMarquee();
     } else {
         // Si el texto cabe, solo mostrarlo normalmente
@@ -301,10 +297,29 @@ void MainWindow::setupMarquee(const QString &text)
     }
 }
 
+void MainWindow::updateMarqueePosition()
+{
+    if (!isMarqueeNeeded) return;
+
+    QFontMetrics metrics(ui->fileName->font());
+    marqueeOffset -= 1; // Ajusta este valor para controlar la velocidad
+
+    // Reiniciar el offset cuando el primer texto complete su desplazamiento
+    if (-marqueeOffset >= metrics.horizontalAdvance(marqueeText) / 2) {
+        marqueeOffset = 0;
+    }
+
+    // Crear un estilo CSS para el desplazamiento
+    QString style = QString("QLabel { margin-left: %1px; }").arg(marqueeOffset);
+    ui->fileName->setStyleSheet(style);
+    ui->fileName->setText(marqueeText);
+}
+
 void MainWindow::startMarquee()
 {
     if (isMarqueeNeeded && marqueeTimer) {
-        marqueeTimer->start(200);  // Ajusta este valor para controlar la velocidad
+        marqueeOffset = 0;
+        marqueeTimer->start(32);  // 60 FPS aproximadamente (1000ms/60 ≈ 16ms)
     }
 }
 
@@ -312,6 +327,7 @@ void MainWindow::stopMarquee()
 {
     if (marqueeTimer) {
         marqueeTimer->stop();
+        ui->fileName->setStyleSheet("");
     }
 }
 

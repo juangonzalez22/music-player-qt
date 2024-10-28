@@ -41,6 +41,7 @@ private slots:
     void focusOutEvent(QFocusEvent *event);
     void focusInEvent(QFocusEvent *event);
     void playPlaceholderVideo();
+    void updateMarqueePosition();
 private:
     void updateDuration(qint64 duration);
     void updatePlaylist(const QString &directory);
@@ -61,6 +62,8 @@ private:
 
     QTimer *marqueeTimer;
     bool isMarqueeNeeded;
+    int marqueeOffset;
+    QString marqueeText;
 };
 
 #endif // MAINWINDOW_H
