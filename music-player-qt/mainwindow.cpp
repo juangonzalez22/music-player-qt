@@ -43,8 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnNext->setIcon(QIcon(":/icons/next.png"));
     ui->btnNext->setIconSize(iconSize);
 
-    setWindowIcon(QIcon("icon.ico"));
-
+    setWindowIcon(QIcon(":/icons/app.ico")); // Cambia a la ruta del recurso
     setWindowTitle("Pro MediaPlayer");
 
     QString sPath = "C:/";
@@ -207,23 +206,18 @@ void MainWindow::playFile(const QString &filePath)
 
 void MainWindow::playPlaceholderVideo()
 {
-    QString placeholderVideoPath = QDir::currentPath() + "/placeholder.mp4";  // Ruta relativa al ejecutable
+    QString placeholderVideoPath = "qrc:/icons/placeholder.mp4";  // Nota el "qrc:" al principio
 
-    if (QFile::exists(placeholderVideoPath)) {
-        // Reutilizar el mismo videoWidget para el backgroundPlayer
-        videoWidget->show();  // Asegurarse de que el videoWidget esté visible
-        backgroundPlayer->stop();
-        backgroundPlayer->setVideoOutput(videoWidget);  // Usar el videoWidget para el placeholder
+    videoWidget->show();
+    backgroundPlayer->stop();
+    backgroundPlayer->setVideoOutput(videoWidget);
 
-        QTimer::singleShot(500, [this, placeholderVideoPath]() {
-            backgroundPlayer->setSource(QUrl::fromLocalFile(placeholderVideoPath));
-            backgroundPlayer->setLoops(QMediaPlayer::Infinite);  // Reproducir en bucle
-            backgroundPlayer->play();
-            qDebug() << "Reproduciendo video placeholder en bucle desde:" << placeholderVideoPath;
-        });
-    } else {
-        qDebug() << "El archivo de video placeholder no existe en la ruta especificada:" << placeholderVideoPath;
-    }
+    QTimer::singleShot(500, [this, placeholderVideoPath]() {
+        backgroundPlayer->setSource(QUrl(placeholderVideoPath));
+        backgroundPlayer->setLoops(QMediaPlayer::Infinite);
+        backgroundPlayer->play();
+        qDebug() << "Reproduciendo video placeholder en bucle desde los recursos:" << placeholderVideoPath;
+    });
 }
 
 
@@ -305,6 +299,13 @@ void MainWindow::setupMarquee(const QString &text)
         stopMarquee();
     }
 
+    // Establecer el texto sin ajuste automático
+    ui->fileName->setWordWrap(false);
+    ui->fileName->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+
+    // Restaurar el estilo original del label
+    ui->fileName->setStyleSheet("QLabel { margin-left: 0px; font-size: 12pt; }"); // Ajusta 12pt al tamaño que desees
+
     // Verificar si el texto es más largo que el label
     QFontMetrics metrics(ui->fileName->font());
     int textWidth = metrics.horizontalAdvance(text);
@@ -327,6 +328,7 @@ void MainWindow::setupMarquee(const QString &text)
     }
 }
 
+
 void MainWindow::updateMarqueePosition()
 {
     if (!isMarqueeNeeded) return;
@@ -339,8 +341,8 @@ void MainWindow::updateMarqueePosition()
         marqueeOffset = 0;
     }
 
-    // Crear un estilo CSS para el desplazamiento
-    QString style = QString("QLabel { margin-left: %1px; }").arg(marqueeOffset);
+    // Crear un estilo CSS para el desplazamiento manteniendo el tamaño de fuente
+    QString style = QString("QLabel { margin-left: %1px; font-size: 12pt; }").arg(marqueeOffset);
     ui->fileName->setStyleSheet(style);
     ui->fileName->setText(marqueeText);
 }

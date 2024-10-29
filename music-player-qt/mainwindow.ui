@@ -131,7 +131,7 @@ QPushButton:hover {
 QSlider::groove:horizontal {
     background: #4A4A4A; /* Color de la pista del slider */
     height: 8px; /* Altura de la pista */
-    border-radius: 21px; /* Bordes redondeados de la pista */
+    border-radius: 4px; /* Bordes redondeados de la pista */
 }
 
 QSlider::sub-page:horizontal {

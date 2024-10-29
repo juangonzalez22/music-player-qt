@@ -8,5 +8,6 @@
         <file>icons/next.png</file>
         <file>icons/prev.png</file>
         <file>icons/placeholder.mp4</file>
+        <file>icons/app.ico</file>
     </qresource>
 </RCC>
