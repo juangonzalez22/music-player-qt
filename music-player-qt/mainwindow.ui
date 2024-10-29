@@ -56,7 +56,7 @@
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    border-radius: 20px;  /* Hace que los bordes del botón sean redondeados */
+    border-radius: 21px;  /* Hace que los bordes del botón sean redondeados */
     min-width: 40px;      /* Establece el ancho mínimo del botón */
     max-width: 40px;      /* Establece el ancho máximo del botón */
     min-height: 40px;     /* Establece la altura mínima del botón */
@@ -68,10 +68,10 @@
 QPushButton:pressed {
     background-color: #555555;  /* Color ligeramente más oscuro cuando se presiona */
 }
-
 QPushButton:hover {
     background-color: #C0C0C0; /* Color cuando se pasa el mouse */
-}</string>
+}
+</string>
     </property>
     <property name="text">
      <string/>
@@ -93,7 +93,7 @@ QPushButton:hover {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    border-radius: 20px;  /* Hace que los bordes del botón sean redondeados */
+    border-radius: 21px;  /* Hace que los bordes del botón sean redondeados */
     min-width: 40px;      /* Establece el ancho mínimo del botón */
     max-width: 40px;      /* Establece el ancho máximo del botón */
     min-height: 40px;     /* Establece la altura mínima del botón */
@@ -105,10 +105,10 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: #555555;  /* Color ligeramente más oscuro cuando se presiona */
 }
-
 QPushButton:hover {
     background-color: #C0C0C0; /* Color cuando se pasa el mouse */
-}</string>
+}
+</string>
     </property>
     <property name="text">
      <string/>
@@ -131,7 +131,7 @@ QPushButton:hover {
 QSlider::groove:horizontal {
     background: #4A4A4A; /* Color de la pista del slider */
     height: 8px; /* Altura de la pista */
-    border-radius: 4px; /* Bordes redondeados de la pista */
+    border-radius: 21px; /* Bordes redondeados de la pista */
 }
 
 QSlider::sub-page:horizontal {
@@ -228,7 +228,7 @@ QSlider::handle:horizontal:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    border-radius: 20px;  /* Hace que los bordes del botón sean redondeados */
+    border-radius: 21px;  /* Hace que los bordes del botón sean redondeados */
     min-width: 40px;      /* Establece el ancho mínimo del botón */
     max-width: 40px;      /* Establece el ancho máximo del botón */
     min-height: 40px;     /* Establece la altura mínima del botón */
@@ -242,7 +242,8 @@ QPushButton:pressed {
 }
 QPushButton:hover {
     background-color: #C0C0C0; /* Color cuando se pasa el mouse */
-}</string>
+}
+</string>
     </property>
     <property name="text">
      <string/>
@@ -290,7 +291,7 @@ QLabel::before {
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>510</y>
+      <y>500</y>
       <width>111</width>
       <height>21</height>
      </rect>
@@ -328,7 +329,7 @@ QLabel::before {
     <property name="geometry">
      <rect>
       <x>930</x>
-      <y>510</y>
+      <y>500</y>
       <width>81</width>
       <height>21</height>
      </rect>
@@ -381,7 +382,7 @@ QLabel::before {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    border-radius: 20px;  /* Hace que los bordes del botón sean redondeados */
+    border-radius: 21px;  /* Hace que los bordes del botón sean redondeados */
     min-width: 40px;      /* Establece el ancho mínimo del botón */
     max-width: 40px;      /* Establece el ancho máximo del botón */
     min-height: 40px;     /* Establece la altura mínima del botón */
@@ -419,7 +420,7 @@ QPushButton:hover {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    border-radius: 20px;  /* Hace que los bordes del botón sean redondeados */
+    border-radius: 21px;  /* Hace que los bordes del botón sean redondeados */
     min-width: 40px;      /* Establece el ancho mínimo del botón */
     max-width: 40px;      /* Establece el ancho máximo del botón */
     min-height: 40px;     /* Establece la altura mínima del botón */
@@ -593,7 +594,7 @@ QGroupBox::indicator:checked {
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>20</height>
+     <height>28</height>
     </rect>
    </property>
    <property name="font">

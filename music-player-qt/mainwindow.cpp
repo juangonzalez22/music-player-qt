@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnStop->setIcon(QIcon(":/icons/stop.png"));
     ui->btnStop->setIconSize(iconSize);
 
-    ui->btnMute->setIcon(QIcon(":/icons/volume.png")); // Usar el ícono de volumen por defecto
+    ui->btnMute->setIcon(QIcon(":/icons/volume.png"));
     ui->btnMute->setIconSize(iconSize);
 
     ui->btnPrev->setIcon(QIcon(":/icons/prev.png"));
@@ -267,6 +267,17 @@ void MainWindow::on_btnStop_clicked()
 void MainWindow::on_sldrVolume_valueChanged(int value)
 {
     audioOutput->setVolume(value / 100.0);
+
+    // Cambiar el icono dependiendo del nivel de volumen
+    if (value == 0) {
+        // Si el volumen es 0, poner el icono de mute
+        ui->btnMute->setIcon(QIcon(":/icons/mute.png"));
+        IS_Muted = true;
+    } else {
+        // Si el volumen no es 0, poner el icono normal
+        ui->btnMute->setIcon(QIcon(":/icons/volume.png"));
+        IS_Muted = false;
+    }
 }
 
 void MainWindow::on_btnPlayPause_clicked()
