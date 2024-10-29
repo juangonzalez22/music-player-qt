@@ -13,6 +13,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 # C++17 es una versión específica del lenguaje de programación C++ que incluye ciertas características y mejoras.
 CONFIG += c++17
 
+
+RC_ICONS = icons/app.ico
+
 # Esta línea está comentada actualmente, pero si la descomentamos, activaría una macro que desactiva el uso de APIs (funciones y características) obsoletas que fueron marcadas como deprecated (descontinuadas) antes de Qt 6.0.0.
 # Esto puede ayudar a evitar usar funciones que ya no se recomiendan o que eventualmente podrían desaparecer en versiones futuras de Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
