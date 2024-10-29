@@ -135,15 +135,27 @@ void MainWindow::focusInEvent(QFocusEvent *event)
 void MainWindow::on_btnMute_clicked()
 {
     if (!IS_Muted) {
-        audioOutput->setVolume(0);
-        ui->btnMute->setIcon(QIcon(":/icons/mute.png")); // Cambiar a ícono de mute
+        // Almacena el volumen actual antes de mutear y mueve el slider a 0
+        previousVolume = ui->sldrVolume->value();
+        ui->sldrVolume->setValue(0);          // Mueve el slider a 0
+        audioOutput->setVolume(0);            // Mutea el audio
+        ui->btnMute->setIcon(QIcon(":/icons/mute.png")); // Cambia el ícono a mute
         IS_Muted = true;
     } else {
-        audioOutput->setVolume(ui->sldrVolume->value() / 100.0);
-        ui->btnMute->setIcon(QIcon(":/icons/volume.png")); // Cambiar a ícono de volumen
+        // Verifica si el volumen previo era 0, si es así, establece en 15
+        if (previousVolume == 0) {
+            previousVolume = 15;
+        }
+
+        // Restaura el volumen previo al desmutear
+        ui->sldrVolume->setValue(previousVolume);  // Restaura el slider a la posición anterior
+        audioOutput->setVolume(previousVolume / 100.0); // Restaura el volumen del audio
+        ui->btnMute->setIcon(QIcon(":/icons/volume.png")); // Cambia el ícono a volumen
         IS_Muted = false;
     }
 }
+
+
 
 void MainWindow::on_actionOpen_File_triggered()
 {

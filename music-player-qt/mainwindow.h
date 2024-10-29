@@ -58,6 +58,8 @@ private:
     QString sPath;
     QStringList playlist;
     int currentIndex;
+    int previousVolume; // Almacena el volumen antes de mutear
+
     QVideoWidget *videoWidget;
 
     QTimer *marqueeTimer;
