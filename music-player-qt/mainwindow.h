@@ -43,6 +43,7 @@ private slots:
     void playPlaceholderVideo();
     void updateMarqueePosition();
     void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
+    void on_btnPlaybackMode_clicked();
 
 private:
     void updateDuration(qint64 duration);
@@ -69,12 +70,13 @@ private:
 
     // Enum para controlar los modos de reproducción
     enum class PlaybackMode {
-        Normal,     // Reproducción secuencial normal
-        Shuffle,    // Reproducción aleatoria
-        RepeatOne   // Repetir la canción actual
+        Normal,
+        RepeatOne,
+        RepeatAll
     };
     // Variable para mantener el estado actual del modo de reproducción
     PlaybackMode currentPlaybackMode;
+    void updatePlaybackModeIcon();
 };
 
 #endif // MAINWINDOW_H

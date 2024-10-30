@@ -441,25 +441,99 @@ QPushButton:hover {
      <string/>
     </property>
    </widget>
-   <widget class="QTreeView" name="treeView">
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>10</y>
+      <width>720</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QGroupBox {
+    background-color: rgba(20, 20, 20, 0.95);   /* Fondo oscuro */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+    padding: 10px;                              /* Espaciado interno del grupo */
+    color: #D0D0D0;                            /* Color del texto */
+}
+
+QGroupBox::title {
+    background-color: transparent;              /* Fondo transparente para el título */
+    color: #D0D0D0;                            /* Color del texto del título */
+    padding: 5px;                              /* Espaciado del título */
+}
+
+QGroupBox::indicator {
+    background-color: rgba(35, 35, 35, 0.8);    /* Fondo de los indicadores (como checkboxes o radio buttons) */
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Borde sutil para los indicadores */
+    padding: 4px;                              /* Espaciado interno para indicadores */
+}
+
+QGroupBox::indicator:checked {
+    background-color: rgba(100, 149, 237, 0.4); /* Fondo al estar chequeado (ej. checkbox) */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde más marcado para el estado chequeado */
+}
+</string>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnPlaybackMode">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>433</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">PushButton {
+    border-radius: 21px;  /* Hace que los bordes del botón sean redondeados */
+    min-width: 40px;      /* Establece el ancho mínimo del botón */
+    max-width: 40px;      /* Establece el ancho máximo del botón */
+    min-height: 40px;     /* Establece la altura mínima del botón */
+    max-height: 40px;     /* Establece la altura máxima del botón */
+    border: 2px solid black;  /* Crea un borde sólido negro de 2 píxeles */
+    background-color: #6A6A6A;  /* Establece el color de fondo a #6A6A6A */
+}
+
+QPushButton:pressed {
+    background-color: #555555;  /* Color ligeramente más oscuro cuando se presiona */
+}
+QPushButton:hover {
+    background-color: #C0C0C0; /* Color cuando se pasa el mouse */
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QSplitter" name="splitter">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>10</y>
       <width>271</width>
-      <height>202</height>
+      <height>401</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Microsoft JhengHei UI Light</family>
-     </font>
+    <property name="orientation">
+     <enum>Qt::Orientation::Vertical</enum>
     </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QTreeView {
+    <widget class="QTreeView" name="treeView">
+     <property name="font">
+      <font>
+       <family>Microsoft JhengHei UI Light</family>
+      </font>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTreeView {
     background-color: rgba(20, 20, 20, 0.95);   /* Fondo oscuro */
     border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
     padding: 5px;                              /* Espaciado */
@@ -498,30 +572,22 @@ QTreeView::branch:has-children:!has-siblings {
 
 
 </string>
-    </property>
-    <property name="animated">
-     <bool>true</bool>
-    </property>
-    <property name="headerHidden">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QListWidget" name="playlistWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>220</y>
-      <width>271</width>
-      <height>196</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Microsoft JhengHei UI</family>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QListWidget {
+     </property>
+     <property name="animated">
+      <bool>true</bool>
+     </property>
+     <property name="headerHidden">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="playlistWidget">
+     <property name="font">
+      <font>
+       <family>Microsoft JhengHei UI</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QListWidget {
     background-color: rgba(20, 20, 20, 0.95);   /* Fondo oscuro */
     border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
     padding: 5px;                              /* Espaciado */
@@ -546,46 +612,8 @@ QListWidget::item:hover {
     color: #E0E0E0;                            /* Color de texto más claro en hover */
 }
 </string>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>10</y>
-      <width>720</width>
-      <height>405</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QGroupBox {
-    background-color: rgba(20, 20, 20, 0.95);   /* Fondo oscuro */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
-    padding: 10px;                              /* Espaciado interno del grupo */
-    color: #D0D0D0;                            /* Color del texto */
-}
-
-QGroupBox::title {
-    background-color: transparent;              /* Fondo transparente para el título */
-    color: #D0D0D0;                            /* Color del texto del título */
-    padding: 5px;                              /* Espaciado del título */
-}
-
-QGroupBox::indicator {
-    background-color: rgba(35, 35, 35, 0.8);    /* Fondo de los indicadores (como checkboxes o radio buttons) */
-    border: 1px solid rgba(255, 255, 255, 0.08); /* Borde sutil para los indicadores */
-    padding: 4px;                              /* Espaciado interno para indicadores */
-}
-
-QGroupBox::indicator:checked {
-    background-color: rgba(100, 149, 237, 0.4); /* Fondo al estar chequeado (ej. checkbox) */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde más marcado para el estado chequeado */
-}
-</string>
-    </property>
-    <property name="title">
-     <string/>
-    </property>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -594,7 +622,7 @@ QGroupBox::indicator:checked {
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>28</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="font">

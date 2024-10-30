@@ -77,6 +77,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(MPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::onMediaStatusChanged);
 
     ui->sldrSeek->setRange(0, 0);
+
+    currentPlaybackMode = PlaybackMode::Normal;
+    updatePlaybackModeIcon();
 }
 
 MainWindow::~MainWindow()
@@ -155,7 +158,40 @@ void MainWindow::on_btnMute_clicked()
     }
 }
 
+// Método para actualizar el icono
+void MainWindow::updatePlaybackModeIcon()
+{
+    QIcon icon;
+    switch (currentPlaybackMode) {
+    case PlaybackMode::Normal:
+        icon = QIcon(":/icons/normal.png");
+        break;
+    case PlaybackMode::RepeatOne:
+        icon = QIcon(":/icons/repeat_one.png");
+        break;
+    case PlaybackMode::RepeatAll:
+        icon = QIcon(":/icons/repeat_all.png");
+        break;
+    }
+    ui->btnPlaybackMode->setIcon(icon);
+}
 
+// slot para el clic del botón
+void MainWindow::on_btnPlaybackMode_clicked()
+{
+    switch (currentPlaybackMode) {
+    case PlaybackMode::Normal:
+        currentPlaybackMode = PlaybackMode::RepeatOne;
+        break;
+    case PlaybackMode::RepeatOne:
+        currentPlaybackMode = PlaybackMode::RepeatAll;
+        break;
+    case PlaybackMode::RepeatAll:
+        currentPlaybackMode = PlaybackMode::Normal;
+        break;
+    }
+    updatePlaybackModeIcon();
+}
 
 void MainWindow::on_actionOpen_File_triggered()
 {
@@ -248,17 +284,25 @@ void MainWindow::on_playlistWidget_doubleClicked(const QModelIndex &index)
 void MainWindow::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
 {
     if (status == QMediaPlayer::EndOfMedia) {
-        // El archivo actual ha terminado de reproducirse
-        if (currentIndex < playlist.size() - 1) {
-            // Si hay un siguiente archivo en la lista, reprodúcelo
-            currentIndex++;
-            QString nextFilePath = playlist.at(currentIndex);
-            playFile(nextFilePath);
-        } else {
-            // Si es el último archivo de la lista, detén la reproducción
-            MPlayer->stop();
-            ui->btnPlayPause->setIcon(QIcon(":/icons/play.png"));
-            IS_Paused = true;
+        switch (currentPlaybackMode) {
+        case PlaybackMode::Normal:
+            if (currentIndex < playlist.size() - 1) {
+                currentIndex++;
+                playFile(playlist.at(currentIndex));
+            } else {
+                MPlayer->stop();
+                ui->btnPlayPause->setIcon(QIcon(":/icons/play.png"));
+                IS_Paused = true;
+            }
+            break;
+        case PlaybackMode::RepeatOne:
+            MPlayer->setPosition(0);
+            MPlayer->play();
+            break;
+        case PlaybackMode::RepeatAll:
+            currentIndex = (currentIndex + 1) % playlist.size();
+            playFile(playlist.at(currentIndex));
+            break;
         }
     }
 }
