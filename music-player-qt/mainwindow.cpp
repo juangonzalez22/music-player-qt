@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnNext->setIconSize(iconSize);
 
     setWindowIcon(QIcon(":/icons/app.ico")); // Cambia a la ruta del recurso
-    setWindowTitle("Pro MediaPlayer");
+    setWindowTitle("JL MediaPlayer");
 
     QString sPath = "C:/";
     dirmodel = new QFileSystemModel(this);
@@ -189,7 +189,7 @@ void MainWindow::playFile(const QString &filePath)
     QFileInfo fileInfo(filePath);
     QString fileName = fileInfo.fileName();
 
-    setWindowTitle("Pro MediaPlayer: " + fileName);
+    setWindowTitle("JL MediaPlayer is playing: " + fileName);
 
     if (fileInfo.suffix() == "mp4" || fileInfo.suffix() == "m4v" || fileInfo.suffix() == "mkv") {
         // Reproducir video normalmente
