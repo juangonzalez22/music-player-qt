@@ -4,7 +4,6 @@
 #include <QTime>
 #include <QFileInfo>
 #include <QDebug>
-#include <QMessageBox>
 #include <QMutexLocker>
 #include <QDir>
 #include <QFileInfoList>
