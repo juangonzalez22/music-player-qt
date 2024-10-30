@@ -48,24 +48,22 @@ private:
     void playFile(const QString &filePath);
 
     Ui::MainWindow *ui;
-    bool IS_Muted = false;
-    bool IS_Paused = true;
     QMediaPlayer *MPlayer;
-    QMediaPlayer *backgroundPlayer;
     QAudioOutput *audioOutput;
-    qint64 Mduration;
-    QFileSystemModel *dirmodel;
-    QString sPath;
-    QStringList playlist;
     int currentIndex;
-    int previousVolume; // Almacena el volumen antes de mutear
-
     QVideoWidget *videoWidget;
-
+    QMediaPlayer *backgroundPlayer;
     QTimer *marqueeTimer;
     bool isMarqueeNeeded;
     int marqueeOffset;
     QString marqueeText;
+    bool IS_Muted = false;
+    bool IS_Paused = true;
+    qint64 Mduration;
+    QFileSystemModel *dirmodel;
+    QString sPath;
+    QStringList playlist;
+    int previousVolume;
 };
 
 #endif // MAINWINDOW_H

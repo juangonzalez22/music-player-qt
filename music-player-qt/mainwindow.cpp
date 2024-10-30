@@ -316,7 +316,7 @@ void MainWindow::setupMarquee(const QString &text)
     ui->fileName->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     // Restaurar el estilo original del label
-    ui->fileName->setStyleSheet("QLabel { margin-left: 0px; font-size: 12pt; }"); // Ajusta 12pt al tamaño que desees
+    ui->fileName->setStyleSheet("QLabel { margin-left: 0px; font-size: 12pt; color: white; }"); // Ajusta 12pt al tamaño que desees
 
     // Verificar si el texto es más largo que el label
     QFontMetrics metrics(ui->fileName->font());
@@ -354,7 +354,7 @@ void MainWindow::updateMarqueePosition()
     }
 
     // Crear un estilo CSS para el desplazamiento manteniendo el tamaño de fuente
-    QString style = QString("QLabel { margin-left: %1px; font-size: 12pt; }").arg(marqueeOffset);
+    QString style = QString("QLabel { margin-left: %1px; font-size: 12pt; color: white; }").arg(marqueeOffset);
     ui->fileName->setStyleSheet(style);
     ui->fileName->setText(marqueeText);
 }
