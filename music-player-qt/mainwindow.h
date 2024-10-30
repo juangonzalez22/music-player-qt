@@ -42,6 +42,8 @@ private slots:
     void focusInEvent(QFocusEvent *event);
     void playPlaceholderVideo();
     void updateMarqueePosition();
+    void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
+
 private:
     void updateDuration(qint64 duration);
     void updatePlaylist(const QString &directory);
@@ -64,6 +66,15 @@ private:
     QString sPath;
     QStringList playlist;
     int previousVolume;
+
+    // Enum para controlar los modos de reproducción
+    enum class PlaybackMode {
+        Normal,     // Reproducción secuencial normal
+        Shuffle,    // Reproducción aleatoria
+        RepeatOne   // Repetir la canción actual
+    };
+    // Variable para mantener el estado actual del modo de reproducción
+    PlaybackMode currentPlaybackMode;
 };
 
 #endif // MAINWINDOW_H

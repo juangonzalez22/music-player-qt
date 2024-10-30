@@ -75,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(MPlayer, &QMediaPlayer::durationChanged, this, &MainWindow::durationChanged);
     connect(MPlayer, &QMediaPlayer::positionChanged, this, &MainWindow::positionChanged);
+    connect(MPlayer, &QMediaPlayer::mediaStatusChanged, this, &MainWindow::onMediaStatusChanged);
 
     ui->sldrSeek->setRange(0, 0);
 }
@@ -245,6 +246,24 @@ void MainWindow::on_playlistWidget_doubleClicked(const QModelIndex &index)
     playFile(filePath);
 }
 
+void MainWindow::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
+{
+    if (status == QMediaPlayer::EndOfMedia) {
+        // El archivo actual ha terminado de reproducirse
+        if (currentIndex < playlist.size() - 1) {
+            // Si hay un siguiente archivo en la lista, reprodúcelo
+            currentIndex++;
+            QString nextFilePath = playlist.at(currentIndex);
+            playFile(nextFilePath);
+        } else {
+            // Si es el último archivo de la lista, detén la reproducción
+            MPlayer->stop();
+            ui->btnPlayPause->setIcon(QIcon(":/icons/play.png"));
+            IS_Paused = true;
+        }
+    }
+}
+
 void MainWindow::on_btnPrev_clicked()
 {
     if (currentIndex > 0) {
@@ -268,6 +287,15 @@ void MainWindow::on_btnStop_clicked()
     MPlayer->stop();
     ui->btnPlayPause->setIcon(QIcon(":/icons/play.png")); // Cambiar a ícono de play;
     IS_Paused = true;
+    //Reinicia la posición del slider
+    ui->sldrSeek->setValue(0);
+    //Actualizamos currentTime
+    ui->currentTime->setText("00:00");
+    if (Mduration > 3600) {
+        ui->totalTime->setText("00:00:00");
+    } else {
+        ui->totalTime->setText("00:00");
+    }
 }
 
 void MainWindow::on_sldrVolume_valueChanged(int value)
