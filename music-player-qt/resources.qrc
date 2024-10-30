@@ -9,5 +9,8 @@
         <file>icons/prev.png</file>
         <file>icons/placeholder.mp4</file>
         <file>icons/app.ico</file>
+        <file>icons/repeat_all.png</file>
+        <file>icons/normal.png</file>
+        <file>icons/shuffle.png</file>
     </qresource>
 </RCC>
