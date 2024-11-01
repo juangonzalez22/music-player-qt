@@ -80,6 +80,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     currentPlaybackMode = PlaybackMode::Normal;
     updatePlaybackModeIcon();
+
+    ui->btnShuffle->setIcon(QIcon(":/icons/shuffle_off.png"));
+    ui->btnShuffle->setIconSize(iconSize);
 }
 
 MainWindow::~MainWindow()
@@ -208,6 +211,8 @@ void MainWindow::updatePlaylist(const QString &directory)
 {
     ui->playlistWidget->clear();
     playlist.clear();
+    originalPlaylist.clear(); // Limpia la playlist original
+
     QDir dir(directory);
     QStringList filters;
     filters << "*.mp3" << "*.mp4" << "*.m4a" << "*.wav" << "*.m4v" << "*.mkv";
@@ -216,6 +221,25 @@ void MainWindow::updatePlaylist(const QString &directory)
     for (const QFileInfo &file : files) {
         ui->playlistWidget->addItem(file.fileName());
         playlist.append(file.filePath());
+    }
+
+    // Si el modo shuffle está activado, mezcla la nueva playlist
+    if (isShuffleEnabled) {
+        originalPlaylist = playlist;
+        QStringList tempPlaylist = playlist;
+        playlist.clear();
+
+        while (!tempPlaylist.isEmpty()) {
+            int randomIndex = QRandomGenerator::global()->bounded(tempPlaylist.size());
+            playlist.append(tempPlaylist.takeAt(randomIndex));
+        }
+
+        // Actualiza la vista
+        ui->playlistWidget->clear();
+        for (const QString &file : playlist) {
+            QFileInfo fileInfo(file);
+            ui->playlistWidget->addItem(fileInfo.fileName());
+        }
     }
 }
 
@@ -250,6 +274,9 @@ void MainWindow::playFile(const QString &filePath)
         // Reproducir el video "placeholder" en bucle usando el mismo videoWidget
         playPlaceholderVideo();
     }
+
+    currentIndex = playlist.indexOf(filePath);
+    ui->playlistWidget->setCurrentRow(currentIndex);
 }
 
 void MainWindow::playPlaceholderVideo()
@@ -411,6 +438,55 @@ void MainWindow::setupMarquee(const QString &text)
     }
 }
 
+void MainWindow::on_btnShuffle_clicked()
+{
+    isShuffleEnabled = !isShuffleEnabled;
+
+    if (isShuffleEnabled) {
+        // Guarda la playlist original si aún no se ha guardado
+        if (originalPlaylist.isEmpty()) {
+            originalPlaylist = playlist;
+        }
+
+        // Crea una copia temporal de la playlist actual
+        QStringList tempPlaylist = playlist;
+
+        // Limpia la playlist actual
+        playlist.clear();
+
+        // Mezcla aleatoriamente
+        while (!tempPlaylist.isEmpty()) {
+            int randomIndex = QRandomGenerator::global()->bounded(tempPlaylist.size());
+            playlist.append(tempPlaylist.takeAt(randomIndex));
+        }
+
+        // Actualiza la UI
+        ui->btnShuffle->setIcon(QIcon(":/icons/shuffle_on.png"));
+
+        // Actualiza la vista de la playlist
+        ui->playlistWidget->clear();
+        for (const QString &file : playlist) {
+            QFileInfo fileInfo(file);
+            ui->playlistWidget->addItem(fileInfo.fileName());
+        }
+    } else {
+        // Restaura el orden original
+        if (!originalPlaylist.isEmpty()) {
+            playlist = originalPlaylist;
+            originalPlaylist.clear();
+        }
+
+        // Actualiza la UI
+        ui->btnShuffle->setIcon(QIcon(":/icons/shuffle_off.png"));
+
+        // Actualiza la vista de la playlist
+        ui->playlistWidget->clear();
+        for (const QString &file : playlist) {
+            QFileInfo fileInfo(file);
+            ui->playlistWidget->addItem(fileInfo.fileName());
+        }
+    }
+}
 
 void MainWindow::updateMarqueePosition()
 {

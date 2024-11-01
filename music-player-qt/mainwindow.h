@@ -44,6 +44,7 @@ private slots:
     void updateMarqueePosition();
     void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void on_btnPlaybackMode_clicked();
+    void on_btnShuffle_clicked();
 
 private:
     void updateDuration(qint64 duration);
@@ -67,6 +68,10 @@ private:
     QString sPath;
     QStringList playlist;
     int previousVolume;
+    //variable para controlar el estado del shuffle
+    bool isShuffleEnabled = false;
+    //lista para mantener el orden original de la playlist
+    QStringList originalPlaylist;
 
     // Enum para controlar los modos de reproducción
     enum class PlaybackMode {

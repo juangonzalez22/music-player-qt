@@ -120,7 +120,7 @@ QPushButton:hover {
       <x>10</x>
       <y>480</y>
       <width>1001</width>
-      <height>22</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -169,7 +169,7 @@ QSlider::handle:horizontal:pressed {
       <x>920</x>
       <y>440</y>
       <width>91</width>
-      <height>21</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -520,6 +520,25 @@ QPushButton:hover {
       <height>401</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QSplitter {
+    background-color: rgba(20, 20, 20, 0.95);
+}
+
+QSplitter::handle {
+    background-color: rgba(40, 40, 40, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 4px;
+}
+
+QSplitter::handle:hover {
+    background-color: rgba(100, 149, 237, 0.4); 
+}
+
+QSplitter::handle:pressed {
+    background-color: rgba(100, 149, 237, 0.6);
+}</string>
+    </property>
     <property name="orientation">
      <enum>Qt::Orientation::Vertical</enum>
     </property>
@@ -534,44 +553,83 @@ QPushButton:hover {
      </property>
      <property name="styleSheet">
       <string notr="true">QTreeView {
-    background-color: rgba(20, 20, 20, 0.95);   /* Fondo oscuro */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
-    padding: 5px;                              /* Espaciado */
-    color: #D0D0D0;                            /* Color del texto */
+    background-color: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #D0D0D0;
+    selection-background-color: rgba(100, 149, 237, 0.3);
+    selection-color: #FFFFFF;
 }
 
 QTreeView::item {
-    background-color: rgba(35, 35, 35, 0.8);    /* Fondo de los ítems */
-    border: 1px solid rgba(255, 255, 255, 0.08);/* Borde sutil de los ítems */
-    padding: 4px;                              /* Espaciado interno */
-    color: #B0B0B0;                            /* Color de texto de los ítems */
-    border-radius: 0px;                        /* Sin bordes redondeados */
-}
-
-QTreeView::item:selected {
-    background-color: rgba(70, 130, 180, 0.7);  /* Fondo azul oscuro para ítems seleccionados */
-    color: #FFFFFF;                            /* Texto blanco en ítems seleccionados */
+    padding: 4px;
+    border: none;
 }
 
 QTreeView::item:hover {
-    background-color: rgba(100, 149, 237, 0.4); /* Fondo azul oscuro al pasar el mouse */
-    color: #E0E0E0;                            /* Color de texto más claro en hover */
+    background-color: rgba(100, 149, 237, 0.2);
 }
 
+QTreeView::item:selected {
+    background-color: rgba(100, 149, 237, 0.3);
+    color: #FFFFFF;
+}
+
+QTreeView::branch {
+    background-color: transparent;
+}
+
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+    image: url(:/icons/branch-closed.png);
+}
+
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings {
+    image: url(:/icons/branch-open.png);
+}
+
+QTreeView::branch:selected {
+    background-color: rgba(100, 149, 237, 0.3);
+}
+
+/* Estilo para la barra de desplazamiento */
+QTreeView QScrollBar:vertical {
+    background: rgba(20, 20, 20, 0.95);
+    width: 8px;
+    margin: 0px;
+}
+
+QTreeView QScrollBar::handle:vertical {
+    background: rgba(100, 149, 237, 0.3);
+    min-height: 20px;
+    border-radius: 4px;
+}
+
+QTreeView QScrollBar::handle:vertical:hover {
+    background: rgba(100, 149, 237, 0.5);
+}
+
+QTreeView QScrollBar::add-line:vertical,
+QTreeView QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QTreeView QScrollBar::add-page:vertical,
+QTreeView QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+/* Estilo para el header */
 QHeaderView::section {
-    background-color: rgba(30, 30, 30, 0.95);   /* Fondo oscuro para las cabeceras */
-    color: #FFFFFF;                             /* Texto blanco para las cabeceras */
+    background-color: rgba(30, 30, 30, 0.95);
+    color: #D0D0D0;
     padding: 4px;
-    border: none;                               /* Sin borde */
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-QTreeView::branch:has-children:!has-siblings {
-    background-color: transparent; /* Fondo transparente para las ramas */
-}
-
-
-
-</string>
+QHeaderView::section:hover {
+    background-color: rgba(100, 149, 237, 0.2);
+}</string>
      </property>
      <property name="animated">
       <bool>true</bool>
@@ -588,32 +646,96 @@ QTreeView::branch:has-children:!has-siblings {
      </property>
      <property name="styleSheet">
       <string notr="true">QListWidget {
-    background-color: rgba(20, 20, 20, 0.95);   /* Fondo oscuro */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
-    padding: 5px;                              /* Espaciado */
-    color: #D0D0D0;                            /* Color del texto */
+    background-color: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #D0D0D0;
 }
 
 QListWidget::item {
-    background-color: rgba(35, 35, 35, 0.8);    /* Fondo de los ítems */
-    border: 1px solid rgba(255, 255, 255, 0.08);/* Borde sutil de los ítems */
-    padding: 4px;                              /* Espaciado interno */
-    color: #B0B0B0;                            /* Color de texto de los ítems */
-    border-radius: 0px;                        /* Sin bordes redondeados */
-}
-
-QListWidget::item:selected {
-    background-color: rgba(35, 35, 35, 0.8);  /* Fondo de ítem seleccionado (sin cambios) */
-    color: #E0E0E0;                            /* Texto más claro en ítem seleccionado */
+    padding: 4px;
+    border: none;
 }
 
 QListWidget::item:hover {
-    background-color: rgba(100, 149, 237, 0.4); /* Fondo azul oscuro al pasar el mouse */
-    color: #E0E0E0;                            /* Color de texto más claro en hover */
+    background-color: rgba(100, 149, 237, 0.2);
 }
-</string>
+
+QListWidget::item:selected {
+    background-color: rgba(100, 149, 237, 0.3);
+    color: #FFFFFF;
+}
+
+QListWidget::item:selected:active {
+    background-color: rgba(100, 149, 237, 0.4);
+}
+
+/* Estilo para la barra de desplazamiento */
+QListWidget QScrollBar:vertical {
+    background: rgba(20, 20, 20, 0.95);
+    width: 8px;
+    margin: 0px;
+}
+
+QListWidget QScrollBar::handle:vertical {
+    background: rgba(100, 149, 237, 0.3);
+    min-height: 20px;
+    border-radius: 4px;
+}
+
+QListWidget QScrollBar::handle:vertical:hover {
+    background: rgba(100, 149, 237, 0.5);
+}
+
+QListWidget QScrollBar::add-line:vertical,
+QListWidget QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QListWidget QScrollBar::add-page:vertical,
+QListWidget QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+/* Estilo para el ítem que se está reproduciendo actualmente */
+QListWidget::item:selected:!active {
+    background-color: rgba(100, 149, 237, 0.3);
+    color: #FFFFFF;
+    font-weight: bold;
+    border-left: 2px solid rgba(100, 149, 237, 0.8);
+}</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="btnShuffle">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>436</y>
+      <width>34</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    border-radius: 15px;  /* Hace que los bordes del botón sean redondeados */
+    min-width: 30px;      /* Establece el ancho mínimo del botón */
+    max-width: 30px;      /* Establece el ancho máximo del botón */
+    min-height: 30px;     /* Establece la altura mínima del botón */
+    max-height: 30px;     /* Establece la altura máxima del botón */
+    border: 2px solid black;  /* Crea un borde sólido negro de 2 píxeles */
+    background-color: #6A6A6A;  /* Establece el color de fondo a #6A6A6A */
+}
+
+QPushButton:pressed {
+    background-color: #555555;  /* Color ligeramente más oscuro cuando se presiona */
+}
+QPushButton:hover {
+    background-color: #C0C0C0; /* Color cuando se pasa el mouse */
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
