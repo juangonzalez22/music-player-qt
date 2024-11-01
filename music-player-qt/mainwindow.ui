@@ -484,18 +484,18 @@ QGroupBox::indicator:checked {
     <property name="geometry">
      <rect>
       <x>590</x>
-      <y>433</y>
-      <width>41</width>
-      <height>41</height>
+      <y>436</y>
+      <width>34</width>
+      <height>34</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">PushButton {
-    border-radius: 21px;  /* Hace que los bordes del botón sean redondeados */
-    min-width: 40px;      /* Establece el ancho mínimo del botón */
-    max-width: 40px;      /* Establece el ancho máximo del botón */
-    min-height: 40px;     /* Establece la altura mínima del botón */
-    max-height: 40px;     /* Establece la altura máxima del botón */
+     <string notr="true">QPushButton {
+    border-radius: 15px;  /* Hace que los bordes del botón sean redondeados */
+    min-width: 30px;      /* Establece el ancho mínimo del botón */
+    max-width: 30px;      /* Establece el ancho máximo del botón */
+    min-height: 30px;     /* Establece la altura mínima del botón */
+    max-height: 30px;     /* Establece la altura máxima del botón */
     border: 2px solid black;  /* Crea un borde sólido negro de 2 píxeles */
     background-color: #6A6A6A;  /* Establece el color de fondo a #6A6A6A */
 }
