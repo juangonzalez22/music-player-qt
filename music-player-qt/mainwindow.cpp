@@ -42,6 +42,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnNext->setIcon(QIcon(":/icons/next.png"));
     ui->btnNext->setIconSize(iconSize);
 
+    ui->btnPlaybackMode->setIconSize(iconSize);
+
     setWindowIcon(QIcon(":/icons/app.ico")); // Cambia a la ruta del recurso
     setWindowTitle("JL MediaPlayer");
 
@@ -177,6 +179,8 @@ void MainWindow::updatePlaybackModeIcon()
         break;
     }
     ui->btnPlaybackMode->setIcon(icon);
+
+
 }
 
 // slot para el clic del botón

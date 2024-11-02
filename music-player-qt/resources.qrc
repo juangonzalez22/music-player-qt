@@ -10,6 +10,8 @@
         <file>icons/placeholder.mp4</file>
         <file>icons/app.ico</file>
         <file>icons/repeat_all.png</file>
+	<file>icons/repeat_one.png</file>
+	<file>icons/repeat_all(2).png</file>
         <file>icons/normal.png</file>
         <file>icons/shuffle_off.png</file>
         <file>icons/shuffle_on.png</file>

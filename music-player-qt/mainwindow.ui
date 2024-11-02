@@ -483,7 +483,7 @@ QGroupBox::indicator:checked {
    <widget class="QPushButton" name="btnPlaybackMode">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>580</x>
       <y>436</y>
       <width>34</width>
       <height>34</height>
@@ -669,7 +669,7 @@ QListWidget::item:selected:active {
     background-color: rgba(100, 149, 237, 0.4);
 }
 
-/* Estilo para la barra de desplazamiento */
+/* Estilo para la barra de desplazamiento vertical */
 QListWidget QScrollBar:vertical {
     background: rgba(20, 20, 20, 0.95);
     width: 8px;
@@ -696,6 +696,33 @@ QListWidget QScrollBar::sub-page:vertical {
     background: none;
 }
 
+/* Estilo para la barra de desplazamiento horizontal */
+QListWidget QScrollBar:horizontal {
+    background: rgba(20, 20, 20, 0.95);
+    height: 8px;
+    margin: 0px;
+}
+
+QListWidget QScrollBar::handle:horizontal {
+    background: rgba(100, 149, 237, 0.3);
+    min-width: 20px;
+    border-radius: 4px;
+}
+
+QListWidget QScrollBar::handle:horizontal:hover {
+    background: rgba(100, 149, 237, 0.5);
+}
+
+QListWidget QScrollBar::add-line:horizontal,
+QListWidget QScrollBar::sub-line:horizontal {
+    width: 0px;
+}
+
+QListWidget QScrollBar::add-page:horizontal,
+QListWidget QScrollBar::sub-page:horizontal {
+    background: none;
+}
+
 /* Estilo para el ítem que se está reproduciendo actualmente */
 QListWidget::item:selected:!active {
     background-color: rgba(100, 149, 237, 0.3);
@@ -709,7 +736,7 @@ QListWidget::item:selected:!active {
    <widget class="QPushButton" name="btnShuffle">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>340</x>
       <y>436</y>
       <width>34</width>
       <height>34</height>
@@ -744,7 +771,7 @@ QPushButton:hover {
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>20</height>
+     <height>28</height>
     </rect>
    </property>
    <property name="font">
