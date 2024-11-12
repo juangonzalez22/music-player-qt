@@ -1,3 +1,5 @@
+![JL MediaPlayer](https://i.imgur.com/K2qiJAj.png)
+
 # JL MediaPlayer
 
 **JL MediaPlayer** es un reproductor multimedia gratuito desarrollado por [juangonzalez22](https://github.com/juangonzalez22) y [LoidherJaimes](https://github.com/LoidherJaimes). Diseñado para ser simple y efectivo, soporta una amplia variedad de formatos de audio y video, todo dentro de una interfaz intuitiva y fácil de usar.
