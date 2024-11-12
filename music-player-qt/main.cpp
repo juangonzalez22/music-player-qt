@@ -11,7 +11,6 @@
 
 int main(int argc, char *argv[])
 {
-    // QApplication es el núcleo de cualquier aplicación en Qt.
     // Aquí estamos creando una instancia de QApplication llamada "a".
     // "argc" y "argv" son los argumentos de línea de comandos que pueden ser usados para configurar la aplicación al iniciarla.
     // "argc" es el número de argumentos y "argv" es una lista de esos argumentos.
@@ -33,4 +32,3 @@ int main(int argc, char *argv[])
     // Cuando el ciclo de eventos finaliza (por ejemplo, cuando el usuario cierra la aplicación), exec() devuelve un valor que luego es devuelto por la función main.
     return a.exec();
 }
-//Hola mundo!

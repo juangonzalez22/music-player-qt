@@ -9,19 +9,28 @@
 #include <QtMultimediaWidgets>
 #include <QFileSystemModel>
 
+// Declaración del espacio de nombres para la interfaz de usuario
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+/**
+ * MainWindow es la clase que representa la ventana principal de la aplicación de reproductor de medios.
+ * Esta clase hereda de QMainWindow y contiene todos los elementos de la interfaz de usuario,
+ * así como la lógica para controlar la reproducción de medios, la gestión de archivos y
+ * la interacción del usuario.
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    // Constructor y destructor
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
+    // Métodos de slot para manejar eventos de la interfaz de usuario
     void durationChanged(qint64 duration);
     void positionChanged(qint64 position);
     void on_btnMute_clicked();
@@ -47,30 +56,35 @@ private slots:
     void on_btnShuffle_clicked();
 
 private:
+    // Métodos privados para la lógica interna
     void updateDuration(qint64 duration);
     void updatePlaylist(const QString &directory);
     void playFile(const QString &filePath);
 
+    // Puntero a la interfaz de usuario generada
     Ui::MainWindow *ui;
-    QMediaPlayer *MPlayer;
-    QAudioOutput *audioOutput;
-    int currentIndex;
-    QVideoWidget *videoWidget;
-    QMediaPlayer *backgroundPlayer;
-    QTimer *marqueeTimer;
-    bool isMarqueeNeeded;
-    int marqueeOffset;
-    QString marqueeText;
-    bool IS_Muted = false;
-    bool IS_Paused = true;
-    qint64 Mduration;
-    QFileSystemModel *dirmodel;
-    QString sPath;
-    QStringList playlist;
-    int previousVolume;
-    //variable para controlar el estado del shuffle
+
+    // Objetos de control multimedia
+    QMediaPlayer *MPlayer;          // Reproductor de medios principal
+    QAudioOutput *audioOutput;      // Salida de audio
+    int currentIndex;               // Índice actual de la pista en la lista de reproducción
+    QVideoWidget *videoWidget;      // Widget para mostrar video
+    QMediaPlayer *backgroundPlayer; // Reproductor de video de fondo
+    QTimer *marqueeTimer;           // Temporizador para el efecto de marquee
+    bool isMarqueeNeeded;           // Indica si se necesita el efecto de marquee
+    int marqueeOffset;              // Desplazamiento actual del marquee
+    QString marqueeText;            // Texto para el marquee
+    bool IS_Muted = false;          // Estado de muteo
+    bool IS_Paused = true;          // Estado de pausa
+    qint64 Mduration;               // Duración total del medio
+    QFileSystemModel *dirmodel;     // Modelo del sistema de archivos
+    QString sPath;                  // Ruta del directorio actual
+    QStringList playlist;           // Lista de reproducción actual
+    int previousVolume;             // Volumen previo antes de mutear
+
+    // Variable para controlar el estado del shuffle
     bool isShuffleEnabled = false;
-    //lista para mantener el orden original de la playlist
+    // Lista para mantener el orden original de la playlist
     QStringList originalPlaylist;
 
     // Enum para controlar los modos de reproducción
@@ -79,8 +93,11 @@ private:
         RepeatOne,
         RepeatAll
     };
+
     // Variable para mantener el estado actual del modo de reproducción
     PlaybackMode currentPlaybackMode;
+
+    // Método privado para actualizar el ícono del modo de reproducción
     void updatePlaybackModeIcon();
 };
 
